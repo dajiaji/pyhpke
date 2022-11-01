@@ -1,7 +1,7 @@
 import enum
 
-
 HPKE_VERSION = b"HPKE-v1"
+
 
 class KEMId(enum.Enum):
     DHKEM_P256_HKDF_SHA256 = 0x0010
@@ -10,10 +10,12 @@ class KEMId(enum.Enum):
     DHKEM_X25519_HKDF_SHA256 = 0x0020
     DHKEM_X448_HKDF_SHA512 = 0x0021
 
+
 class KDFId(enum.Enum):
     HKDF_SHA256 = 0x0001
     HKDF_SHA384 = 0x0002
     HKDF_SHA512 = 0x0003
+
 
 class AEADId(enum.Enum):
     AES128_GCM = 0x0001
