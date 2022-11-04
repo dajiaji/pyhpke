@@ -1,2 +1,163 @@
-# pyhpke
-A Python HPKE (Hybrid Public Key Encryption) Implementation
+# PyHPKE - A Python implementation of HPKE
+
+[![PyPI version](https://badge.fury.io/py/pyhpke.svg)](https://badge.fury.io/py/pyhpke)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyhpke)
+[![Documentation Status](https://readthedocs.org/projects/pyhpke/badge/?version=latest)](https://pyhpke.readthedocs.io/en/latest/?badge=latest)
+![Github CI](https://github.com/dajiaji/pyhpke/actions/workflows/python-package.yml/badge.svg)
+[![codecov](https://codecov.io/gh/dajiaji/pyhpke/branch/main/graph/badge.svg?token=QN8GXEYEP3)](https://codecov.io/gh/dajiaji/pyhpke)
+
+
+PyHPKE is a [HPKE (Hybrid Public Key Encryption)](https://www.rfc-editor.org/rfc/rfc9180.html) implementation written in Python.
+
+You can install PyHPKE with pip:
+
+```sh
+$ pip install pyhpke
+```
+
+And then, you can use it as follows:
+
+
+```py
+from pyhpke import AEADId, CipherSuite, KDFId, KEMId, KEMKey
+
+# The sender side:
+suite_s = CipherSuite.new(KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM)
+pkr = KEMKey.from_jwk(  # from_pem is also available.
+    {
+        "kid": "01",
+        "kty": "EC",
+        "crv": "P-256",
+        "x": "Ze2loSV3wrroKUN_4zhwGhCqo3Xhu1td4QjeQ5wIVR0",
+        "y": "HlLtdXARY_f55A3fnzQbPcm6hgr34Mp8p-nuzQCE0Zw",
+    }
+)
+enc, sender = suite_s.create_sender_context(pkr)
+ct = sender.seal(b"Hello world!")
+
+# The recipient side:
+suite_r = CipherSuite.new(KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM)
+skr = KEMKey.from_jwk(
+    {
+        "kid": "01",
+        "kty": "EC",
+        "crv": "P-256",
+        "x": "Ze2loSV3wrroKUN_4zhwGhCqo3Xhu1td4QjeQ5wIVR0",
+        "y": "HlLtdXARY_f55A3fnzQbPcm6hgr34Mp8p-nuzQCE0Zw",
+        "d": "r_kHyZ-a06rmxM3yESK84r1otSg-aQcVStkRhA-iCM8",
+    }
+)
+recipient = suite_r.create_recipient_context(enc, skr)
+pt = recipient.open(ct)
+
+assert pt == b"Hello world!"
+```
+
+## Index
+
+- [Installation](#installation)
+- [Supported HPKE Modes and Cipher Suites](#supported-hpke-modes-and-cipher-suites)
+- [Usage](#usage)
+- [API Reference](#api-reference)
+- [Test](#test)
+- [Contributing](#contributing)
+
+## Installation
+
+You can install PySETO with pip:
+
+```sh
+$ pip install pyseto
+```
+
+## Supported HPKE Modes and Cipher Suites
+
+
+### Modes
+
+| Base | PSK | Auth | AuthPSK |
+| ---- | --- | ---- | ------- |
+| ✅   | ✅  | ✅   | ✅      |
+
+
+### Key Encapsulation Machanisms (KEMs)
+
+| KEMs                        |    |
+| --------------------------- | -- |
+| DHKEM (P-256, HKDF-SHA256)  | ✅ |
+| DHKEM (P-384, HKDF-SHA384)  | ✅ |
+| DHKEM (P-521, HKDF-SHA512)  | ✅ |
+| DHKEM (X25519, HKDF-SHA256) | ✅ |
+| DHKEM (X448, HKDF-SHA512)   | ✅ |
+
+
+### Key Derivation Functions (KDFs)
+
+| KDFs        |    |
+| ----------- | -- |
+| HKDF-SHA256 | ✅ |
+| HKDF-SHA384 | ✅ |
+| HKDF-SHA512 | ✅ |
+
+
+### Authenticated Encryption with Associated Data (AEAD) Functions
+
+| AEADs            |    |
+| ---------------- | -- |
+| AES-128-GCM      | ✅ |
+| AES-256-GCM      | ✅ |
+| ChaCha20Poly1305 | ✅ |
+| Export Only      | ✅ |
+
+## Usage
+
+```py
+from pyhpke import AEADId, CipherSuite, KDFId, KEMId, KEMKey
+
+# The sender side:
+suite_s = CipherSuite.new(KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM)
+pkr = KEMKey.from_jwk(
+    {
+        "kid": "01",
+        "kty": "EC",
+        "crv": "P-256",
+        "x": "Ze2loSV3wrroKUN_4zhwGhCqo3Xhu1td4QjeQ5wIVR0",
+        "y": "HlLtdXARY_f55A3fnzQbPcm6hgr34Mp8p-nuzQCE0Zw",
+    }
+)
+enc, sender = suite_s.create_sender_context(pkr)
+ct = sender.seal(b"Hello world!")
+
+# The recipient side:
+suite_r = CipherSuite.new(KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM)
+skr = KEMKey.from_jwk(
+    {
+        "kid": "01",
+        "kty": "EC",
+        "crv": "P-256",
+        "x": "Ze2loSV3wrroKUN_4zhwGhCqo3Xhu1td4QjeQ5wIVR0",
+        "y": "HlLtdXARY_f55A3fnzQbPcm6hgr34Mp8p-nuzQCE0Zw",
+        "d": "r_kHyZ-a06rmxM3yESK84r1otSg-aQcVStkRhA-iCM8",
+    }
+)
+recipient = suite_r.create_recipient_context(enc, skr)
+pt = recipient.open(ct)
+
+assert pt == b"Hello world!"
+```
+
+## API Reference
+
+See [Documentation](https://pyhpke.readthedocs.io/en/stable/api.html).
+
+## Test
+
+You can run tests from the project root after cloning with:
+
+```sh
+$ tox
+```
+
+## Contributing
+
+We welcome all kind of contributions, filing issues, suggesting new features or sending PRs.
