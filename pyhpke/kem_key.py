@@ -5,6 +5,7 @@ from cryptography.hazmat.primitives.asymmetric.ec import (
     EllipticCurvePrivateKey,
     EllipticCurvePublicKey,
 )
+from cryptography.hazmat.primitives.asymmetric.x448 import X448PrivateKey, X448PublicKey
 from cryptography.hazmat.primitives.asymmetric.x25519 import (
     X25519PrivateKey,
     X25519PublicKey,
@@ -16,9 +17,8 @@ from cryptography.hazmat.primitives.serialization import (
 
 from .consts import HPKE_SUPPORTED_JWK_KTYS
 from .kem_key_interface import KEMKeyInterface
-
-# from .keys.x448_key import X448Key
 from .keys.ec_key import ECKey
+from .keys.x448_key import X448Key
 from .keys.x25519_key import X25519Key
 
 
@@ -56,8 +56,8 @@ class KEMKey:
                 raise ValueError("crv not found.")
             if jwk["crv"] == "X25519":
                 return X25519Key.from_jwk(jwk)
-            # if jwk["crv"] == "X448":
-            #     return X448Key.from_jwk(jwk)
+            if jwk["crv"] == "X448":
+                return X448Key.from_jwk(jwk)
             raise ValueError(f"Unsupported or unknown crv: {jwk['crv']}.")
         raise ValueError("Unsupported or unknown key.")
 
@@ -84,8 +84,8 @@ class KEMKey:
             return ECKey(k)
         elif isinstance(k, X25519PrivateKey) or isinstance(k, X25519PublicKey):
             return X25519Key(k)
-        # elif isinstance(k, X448PrivateKey) or isinstance(k, X448PublicKey):
-        #     return X448Key(k)
+        elif isinstance(k, X448PrivateKey) or isinstance(k, X448PublicKey):
+            return X448Key(k)
         raise ValueError("Unsupported or unknown key.")
 
 
