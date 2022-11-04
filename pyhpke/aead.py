@@ -75,7 +75,7 @@ class AEAD(AEADInterface):
 
 
 class AEADParams(object):
-    def __init__(self, ctx: AEAD, key: bytes, base_nonce: bytes, seq: int, exporter_secret: bytes):
+    def __init__(self, ctx: AEADInterface, key: bytes, base_nonce: bytes, seq: int, exporter_secret: bytes):
         self._ctx = ctx
         self._key = key
         self._base_nonce = base_nonce
@@ -83,7 +83,7 @@ class AEADParams(object):
         self._exporter_secret = exporter_secret
 
     @property
-    def ctx(self) -> AEAD:
+    def ctx(self) -> AEADInterface:
         return self._ctx
 
     @property

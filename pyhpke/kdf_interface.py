@@ -1,7 +1,17 @@
+from .consts import KDFId
+
+
 class KDFInterface(object):
     """
     The KDF (Key Derivation Function) interface.
     """
+
+    @property
+    def id(self) -> KDFId:
+        """
+        The KDF identifier.
+        """
+        raise NotImplementedError()
 
     def extract(self, salt: bytes, ikm: bytes) -> bytes:
         raise NotImplementedError()

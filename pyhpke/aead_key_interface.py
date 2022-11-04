@@ -15,7 +15,7 @@ class AEADKeyInterface:
             bytes: The encrypted data.
         Raises:
             ValueError: Invalid arguments.
-            EncodeError: Failed to encrypt the plain text.
+            SealError: Failed to encrypt the plain text.
         """
         raise NotImplementedError()
 
@@ -31,6 +31,6 @@ class AEADKeyInterface:
             bytes: The decrypted data.
         Raises:
             ValueError: Invalid arguments.
-            DecodeError: Failed to decrypt the cipher text.
+            OpenError: Failed to decrypt the cipher text.
         """
         raise NotImplementedError()

@@ -2,6 +2,7 @@ from typing import Any, Optional, Tuple
 
 from .consts import KDFId, KEMId
 from .kdf import KDF
+from .kem_interface import KEMInterface
 from .kem_key_interface import KEMKeyInterface
 from .kem_primitives.ec import EC
 from .kem_primitives.x448 import X448
@@ -9,7 +10,7 @@ from .kem_primitives.x25519 import X25519
 from .utils import i2osp
 
 
-class KEM(object):
+class KEM(KEMInterface):
     """
     The KEM (Key Encapsulation Mechanism) interface.
     """

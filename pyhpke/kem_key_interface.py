@@ -2,7 +2,6 @@ from typing import Any
 
 
 class KEMKeyInterface:
-
     """
     The KEM key interface.
     """

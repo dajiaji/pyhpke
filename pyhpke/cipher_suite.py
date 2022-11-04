@@ -8,6 +8,7 @@ from .exporter_context import ExporterContext
 from .kdf import KDF
 from .kdf_interface import KDFInterface
 from .kem import KEM
+from .kem_interface import KEMInterface
 from .kem_key_interface import KEMKeyInterface
 from .recipient_context import RecipientContext
 from .sender_context import SenderContext
@@ -19,7 +20,7 @@ class CipherSuite(object):
     An HPKE cipher suite which consists of KEM, KDF and AEAD.
     """
 
-    def __init__(self, kem: KEM, kdf: KDF, aead: AEAD):
+    def __init__(self, kem: KEMInterface, kdf: KDFInterface, aead: AEADInterface):
         self._kem = kem
         self._kdf = kdf
         self._aead = aead
@@ -44,7 +45,7 @@ class CipherSuite(object):
         return cls(kem, kdf, aead)
 
     @property
-    def kem(self) -> KEM:
+    def kem(self) -> KEMInterface:
         """
         The KEM context in the cipher suite.
         """
