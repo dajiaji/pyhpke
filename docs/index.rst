@@ -17,7 +17,9 @@ And then, you can use it as follows:
     >>> from pyhpke import CipherSuite, KEMKey, KEMId, KDFId, AEADId
     >>> public_key_pem = b"-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VuAyEAoMfvlI5DN08JRFP2fhWvZ6vBEl28yFeS9O9YQUjNyCY=\n-----END PUBLIC KEY-----"
     >>> pkr = KEMKey.from_pem(public_key_pem)
-    >>> suite = CipherSuite.new(KEMId.DHKEM_X25519_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM)
+    >>> suite = CipherSuite.new(
+    ...     KEMId.DHKEM_X25519_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM
+    ... )
     >>> enc, sender = suite.create_sender_context(pkr)
     >>> ct = sender.seal(b"Hello world!")
     >>>
