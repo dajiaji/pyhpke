@@ -36,6 +36,9 @@ class EC(KEMPrimitivesInterface):
     def derive_key_pair(self, ikm: bytes) -> KEMKeyPair:
         raise NotImplementedError()
 
+    def deserialize_private_key(self, key: bytes) -> KEMKeyInterface:
+        return ECKey.from_private_bytes(self._crv, key)
+
     def serialize_public_key(self, key: KEMKeyInterface) -> bytes:
         return key.to_public_bytes()
 

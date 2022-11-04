@@ -27,6 +27,10 @@ class X25519Key(KEMKeyInterface):
         super().__init__(key)
 
     @classmethod
+    def from_private_bytes(cls, key: bytes) -> KEMKeyInterface:
+        return cls(X25519PrivateKey.from_private_bytes(key))
+
+    @classmethod
     def from_public_bytes(cls, key: bytes) -> KEMKeyInterface:
         return cls(X25519PublicKey.from_public_bytes(key))
 

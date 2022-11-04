@@ -16,6 +16,12 @@ class KEMInterface(object):
         """
         raise NotImplementedError()
 
+    def deserialize_private_key(self, key: bytes) -> KEMKeyInterface:
+        raise NotImplementedError()
+
+    def deserialize_public_key(self, key: bytes) -> KEMKeyInterface:
+        raise NotImplementedError()
+
     def encap(self, pkr: KEMKeyInterface, sks: Optional[KEMKeyInterface] = None) -> Tuple[bytes, bytes]:
         raise NotImplementedError()
 

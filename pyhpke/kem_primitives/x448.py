@@ -20,6 +20,9 @@ class X448(KEMPrimitivesInterface):
     def derive_key_pair(self, ikm: bytes) -> KEMKeyPair:
         raise NotImplementedError()
 
+    def deserialize_private_key(self, key: bytes) -> KEMKeyInterface:
+        return X448Key.from_private_bytes(key)
+
     def serialize_public_key(self, pk: KEMKeyInterface) -> bytes:
         return pk.to_public_bytes()
 

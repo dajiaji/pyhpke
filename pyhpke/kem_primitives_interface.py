@@ -12,7 +12,13 @@ class KEMPrimitivesInterface(object):
     def derive_key_pair(self, ikm: bytes) -> KEMKeyPair:
         raise NotImplementedError()
 
+    def serialize_private_key(self, key: bytes) -> KEMKeyInterface:
+        raise NotImplementedError()
+
     def serialize_public_key(self, key: KEMKeyInterface) -> bytes:
+        raise NotImplementedError()
+
+    def deserialize_private_key(self, key: bytes) -> KEMKeyInterface:
         raise NotImplementedError()
 
     def deserialize_public_key(self, key: bytes) -> KEMKeyInterface:
