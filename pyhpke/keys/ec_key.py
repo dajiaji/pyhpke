@@ -89,19 +89,3 @@ class ECKey(KEMKeyInterface):
         if not self._is_public:
             raise ValueError("The key is private.")
         return self._key.public_bytes(encoding=Encoding.X962, format=PublicFormat.UncompressedPoint)
-
-    def public_key(self) -> KEMKeyInterface:
-        """
-        Serializes the key to a byte string.
-        """
-        if self._is_public:
-            raise ValueError("The key is public.")
-        return ECKey(self._key.public_key())
-
-    def exchange(self, public_key: KEMKeyInterface) -> bytes:
-        """
-        Derives a key with a keying material or key exchange.
-        """
-        if self._is_public:
-            raise ValueError("The key is public.")
-        return self._key.exchange(ec.ECDH(), public_key.raw)
