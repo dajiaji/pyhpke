@@ -24,7 +24,7 @@ from .keys.x25519_key import X25519Key
 
 class KEMKey:
     """
-    A :class:`KEMKeyInterface <hpke.KEMKeyInterface>` Builder.
+    A :class:`KEMKeyInterface <pyhpke.KEMKeyInterface>` Builder.
     """
 
     # @classmethod
