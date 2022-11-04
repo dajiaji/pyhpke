@@ -1,9 +1,11 @@
-from typing import Optional, Tuple
+from typing import Any, Optional, Tuple
 
 from .consts import KDFId, KEMId
 from .kdf import KDF
 from .kem_key_interface import KEMKeyInterface
 from .kem_primitives.ec import EC
+from .kem_primitives.x448 import X448
+from .kem_primitives.x25519 import X25519
 from .utils import i2osp
 
 
@@ -15,6 +17,7 @@ class KEM(object):
     def __init__(self, kem_id: KEMId, kdf_id: KDFId):
 
         self._id = kem_id
+        self._prim: Any
         if kem_id == KEMId.DHKEM_P256_HKDF_SHA256:
             self._nsecret = 32
             self._prim = EC(kem_id)
@@ -24,6 +27,12 @@ class KEM(object):
         elif kem_id == KEMId.DHKEM_P521_HKDF_SHA512:
             self._nsecret = 64
             self._prim = EC(kem_id)
+        elif kem_id == KEMId.DHKEM_X25519_HKDF_SHA256:
+            self._nsecret = 32
+            self._prim = X25519()
+        elif kem_id == KEMId.DHKEM_X448_HKDF_SHA512:
+            self._nsecret = 64
+            self._prim = X448()
         else:
             raise ValueError("The specified kem is not supported.")
         suite_id = b"KEM" + i2osp(kdf_id.value, 2)
