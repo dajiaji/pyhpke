@@ -9,6 +9,7 @@ from .kdf import KDF
 from .kdf_interface import KDFInterface
 from .kem import KEM
 from .kem_interface import KEMInterface
+from .kem_key import KEMKeyPair
 from .kem_key_interface import KEMKeyInterface
 from .recipient_context import RecipientContext
 from .sender_context import SenderContext
@@ -72,6 +73,7 @@ class CipherSuite(object):
         sks: Optional[KEMKeyInterface] = None,
         psk: bytes = b"",
         psk_id: bytes = b"",
+        eks: Optional[KEMKeyPair] = None,
     ) -> Tuple[bytes, ContextInterface]:
 
         """
@@ -83,7 +85,7 @@ class CipherSuite(object):
         else:
             mode = Mode.PSK if sks is None else Mode.AUTH_PSK
 
-        shared_secret, enc = self._kem.encap(pkr, sks)
+        shared_secret, enc = self._kem.encap(pkr, sks, eks)
         return enc, self._key_schedule_s(mode, shared_secret, info, psk, psk_id)
 
     def create_recipient_context(

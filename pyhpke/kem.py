@@ -3,6 +3,7 @@ from typing import Any, Optional, Tuple
 from .consts import KDFId, KEMId
 from .kdf import KDF
 from .kem_interface import KEMInterface
+from .kem_key import KEMKeyPair
 from .kem_key_interface import KEMKeyInterface
 from .kem_primitives.ec import EC
 from .kem_primitives.x448 import X448
@@ -58,9 +59,15 @@ class KEM(KEMInterface):
     def deserialize_public_key(self, key: bytes) -> KEMKeyInterface:
         return self._prim.deserialize_public_key(key)
 
-    def encap(self, pkr: KEMKeyInterface, sks: Optional[KEMKeyInterface] = None) -> Tuple[bytes, bytes]:
+    def encap(
+        self, pkr: KEMKeyInterface, sks: Optional[KEMKeyInterface] = None, eks: Optional[KEMKeyPair] = None
+    ) -> Tuple[bytes, bytes]:
         """ """
-        ek = self._prim.generate_key_pair()
+        if eks is None:
+            ek = self._prim.generate_key_pair()
+        else:
+            # For testing purpose only
+            ek = eks
         enc = self._prim.serialize_public_key(ek.public_key)
 
         if sks is None:
