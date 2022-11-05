@@ -1,13 +1,14 @@
+import struct
 from typing import Any, Optional, Tuple
 
 from .consts import KDFId, KEMId
 from .kdf import KDF
 from .kem_interface import KEMInterface
+from .kem_key import KEMKeyPair
 from .kem_key_interface import KEMKeyInterface
 from .kem_primitives.ec import EC
 from .kem_primitives.x448 import X448
 from .kem_primitives.x25519 import X25519
-from .utils import i2osp
 
 
 class KEM(KEMInterface):
@@ -15,28 +16,33 @@ class KEM(KEMInterface):
     The KEM (Key Encapsulation Mechanism) interface.
     """
 
-    def __init__(self, kem_id: KEMId, kdf_id: KDFId):
+    def __init__(self, kem_id: KEMId):
 
         self._id = kem_id
         self._prim: Any
         if kem_id == KEMId.DHKEM_P256_HKDF_SHA256:
             self._nsecret = 32
+            kdf_id = KDFId.HKDF_SHA256
             self._prim = EC(kem_id)
         elif kem_id == KEMId.DHKEM_P384_HKDF_SHA384:
             self._nsecret = 48
+            kdf_id = KDFId.HKDF_SHA384
             self._prim = EC(kem_id)
         elif kem_id == KEMId.DHKEM_P521_HKDF_SHA512:
+            kdf_id = KDFId.HKDF_SHA512
             self._nsecret = 64
             self._prim = EC(kem_id)
         elif kem_id == KEMId.DHKEM_X25519_HKDF_SHA256:
+            kdf_id = KDFId.HKDF_SHA256
             self._nsecret = 32
             self._prim = X25519()
         elif kem_id == KEMId.DHKEM_X448_HKDF_SHA512:
+            kdf_id = KDFId.HKDF_SHA512
             self._nsecret = 64
             self._prim = X448()
         else:
             raise ValueError("The specified kem is not supported.")
-        suite_id = b"KEM" + i2osp(kdf_id.value, 2)
+        suite_id = b"KEM" + struct.pack(">H", kem_id.value)
         self._kdf = KDF(kdf_id, suite_id)
         return
 
@@ -52,9 +58,21 @@ class KEM(KEMInterface):
         shared_secret = self._kdf.labeled_expand(eae_prk, b"shared_secret", kem_context, length)
         return shared_secret
 
-    def encap(self, pkr: KEMKeyInterface, sks: Optional[KEMKeyInterface] = None) -> Tuple[bytes, bytes]:
+    def deserialize_private_key(self, key: bytes) -> KEMKeyInterface:
+        return self._prim.deserialize_private_key(key)
+
+    def deserialize_public_key(self, key: bytes) -> KEMKeyInterface:
+        return self._prim.deserialize_public_key(key)
+
+    def encap(
+        self, pkr: KEMKeyInterface, sks: Optional[KEMKeyInterface] = None, eks: Optional[KEMKeyPair] = None
+    ) -> Tuple[bytes, bytes]:
         """ """
-        ek = self._prim.generate_key_pair()
+        if eks is None:
+            ek = self._prim.generate_key_pair()
+        else:
+            # For testing purpose only
+            ek = eks
         enc = self._prim.serialize_public_key(ek.public_key)
 
         if sks is None:

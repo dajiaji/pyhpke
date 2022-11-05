@@ -10,5 +10,4 @@ class RecipientContext(EncryptionContext):
         try:
             return self._key.open(ct, self._next_nonce(), aad)
         except Exception as err:
-            print(err)
             raise OpenError("Failed to open.") from err

@@ -6,7 +6,7 @@ from .context_interface import ContextInterface
 from .exceptions import NotSupportedError, OpenError, PyHPKEError, SealError
 from .kdf_interface import KDFInterface
 from .kem_interface import KEMInterface
-from .kem_key import KEMKey
+from .kem_key import KEMKey, KEMKeyPair
 from .kem_key_interface import KEMKeyInterface
 
 __version__ = "0.3.0"
@@ -34,5 +34,6 @@ __all__ = [
     "KDFInterface",
     "KEMInterface",
     "KEMKey",
+    "KEMKeyPair",
     "KEMKeyInterface",
 ]

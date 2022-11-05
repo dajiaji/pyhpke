@@ -29,6 +29,10 @@ class ECKey(KEMKeyInterface):
         super().__init__(key)
 
     @classmethod
+    def from_private_bytes(cls, crv: Any, key: bytes) -> KEMKeyInterface:
+        return cls(ec.derive_private_key(int.from_bytes(key, byteorder="big"), crv))
+
+    @classmethod
     def from_public_bytes(cls, crv: Any, key: bytes) -> KEMKeyInterface:
         return cls(ec.EllipticCurvePublicKey.from_encoded_point(crv, key))
 
