@@ -1,17 +1,17 @@
-from typing import Optional
-
 import json
 import os
+from typing import Optional
+
 import pytest
 
-from pyhpke import AEADId, CipherSuite, KDFId, KEMId, KEMKey, KEMKeyInterface, KEMKeyPair
+from pyhpke import AEADId, CipherSuite, KDFId, KEMId, KEMKeyInterface, KEMKeyPair
 
 
 class TestWithOfficialTestVectors:
     """
     Tests with official test vectors.
     """
-    
+
     @pytest.mark.parametrize(
         "v",
         json.load(open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "vectors", "test-vectors.json"))),
@@ -32,8 +32,8 @@ class TestWithOfficialTestVectors:
             pks = suite.kem.deserialize_public_key(bytes.fromhex(v["pkSm"]))
 
         # TODO derive_key_pair
-        ikme = bytes.fromhex(v["ikmE"])
-        ikmr = bytes.fromhex(v["ikmR"])
+        # ikme = bytes.fromhex(v["ikmE"])
+        # ikmr = bytes.fromhex(v["ikmR"])
 
         # create_{sender,recipient}_context
         info = bytes.fromhex(v["info"])
