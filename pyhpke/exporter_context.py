@@ -16,4 +16,6 @@ class ExporterContext(ContextInterface):
         raise NotSupportedError("Not available on export-only mode.")
 
     def export(self, exporter_context: bytes, length: int) -> bytes:
+        print(f"exporter_secret: {self._exporter_secret.hex()}")
+        print(f"exporter_context: {exporter_context.hex()}")
         return self._kdf.labeled_expand(self._exporter_secret, b"sec", exporter_context, length)

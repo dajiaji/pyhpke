@@ -1,3 +1,4 @@
+import struct
 from typing import Optional, Tuple
 
 from .aead import AEAD, AEADParams
@@ -13,7 +14,6 @@ from .kem_key import KEMKeyPair
 from .kem_key_interface import KEMKeyInterface
 from .recipient_context import RecipientContext
 from .sender_context import SenderContext
-from .utils import i2osp
 
 
 class CipherSuite(object):
@@ -39,8 +39,8 @@ class CipherSuite(object):
         Returns:
             bytes: A CipherSuite object.
         """
-        suite_id = b"HPKE" + i2osp(kem_id.value, 2) + i2osp(kdf_id.value, 2) + i2osp(aead_id.value, 2)
-        kem = KEM(kem_id, kdf_id)
+        suite_id = b"HPKE" + struct.pack(">HHH", kem_id.value, kdf_id.value, aead_id.value)
+        kem = KEM(kem_id)
         kdf = KDF(kdf_id, suite_id)
         aead = AEAD(aead_id)
         return cls(kem, kdf, aead)
@@ -80,12 +80,13 @@ class CipherSuite(object):
         Creates a sender context.
         """
         mode: Mode = Mode.BASE
-        if psk is None:
+        if psk == b"":
             mode = Mode.BASE if sks is None else Mode.AUTH
         else:
             mode = Mode.PSK if sks is None else Mode.AUTH_PSK
 
         shared_secret, enc = self._kem.encap(pkr, sks, eks)
+        print(f"shared_secret: {shared_secret.hex()}")
         return enc, self._key_schedule_s(mode, shared_secret, info, psk, psk_id)
 
     def create_recipient_context(
@@ -101,7 +102,7 @@ class CipherSuite(object):
         Creates a recipient context.
         """
         mode: Mode = Mode.BASE
-        if psk is None:
+        if psk == b"":
             mode = Mode.BASE if pks is None else Mode.AUTH
         else:
             mode = Mode.PSK if pks is None else Mode.AUTH_PSK
@@ -149,12 +150,13 @@ class CipherSuite(object):
         psk_id: bytes,
     ) -> Tuple[KDF, AEADParams]:
 
-        suite_id = b"HPKE" + i2osp(self._kem.id.value, 2) + i2osp(self._kdf.id.value, 2) + i2osp(self._aead.id.value, 2)
+        suite_id = b"HPKE" + struct.pack(">HHH", self._kem.id.value, self._kdf.id.value, self._aead.id.value)
         kdf = KDF(self._kdf.id, suite_id)
 
         psk_id_hash = kdf.labeled_extract(b"", b"psk_id_hash", psk_id)
         info_hash = kdf.labeled_extract(b"", b"info_hash", info)
         key_schedule_context = bytes([mode.value]) + psk_id_hash + info_hash
+        print(f"key_schedule_context: {key_schedule_context.hex()}")
 
         secret = kdf.labeled_extract(shared_secret, b"secret", psk)
 
