@@ -57,6 +57,7 @@ assert pt == b"Hello world!"
 
 - [Installation](#installation)
 - [Supported HPKE Modes and Cipher Suites](#supported-hpke-modes-and-cipher-suites)
+- [Warnings and Restrictions](#warnings-and-restrictions)
 - [Usage](#usage)
 - [API Reference](#api-reference)
 - [Test](#test)
@@ -64,50 +65,41 @@ assert pt == b"Hello world!"
 
 ## Installation
 
-You can install PySETO with pip:
+You can install PyHPKE with pip:
 
 ```sh
-$ pip install pyseto
+$ pip install pyhpke
 ```
 
 ## Supported HPKE Modes and Cipher Suites
 
+PyHPKE supports all of the HPKE modes and cipher suites defined in RFC9180 below.
 
-### Modes
+- modes
+    - ✅ Base
+    - ✅ PSK
+    - ✅ Auth
+    - ✅ AuthPSK
+- KEMs (Key Encapsulation Machanisms)
+    - ✅ DHKEM (P-256, HKDF-SHA256)
+    - ✅ DHKEM (P-384, HKDF-SHA384)
+    - ✅ DHKEM (P-521, HKDF-SHA512)
+    - ✅ DHKEM (X25519, HKDF-SHA256)
+    - ✅ DHKEM (X448, HKDF-SHA512)
+- KDFs (Key Derivation Functions)
+    - ✅ HKDF-SHA256
+    - ✅ HKDF-SHA384
+    - ✅ HKDF-SHA512
+- AEADs (Authenticated Encryption with Associated Data)
+    - ✅ AES-128-GCM
+    - ✅ AES-256-GCM
+    - ✅ ChaCha20Poly1305
+    - ✅ Export Only
 
-| Base | PSK | Auth | AuthPSK |
-| ---- | --- | ---- | ------- |
-| ✅   | ✅  | ✅   | ✅      |
+## Warnings and Restrictions
 
-
-### Key Encapsulation Machanisms (KEMs)
-
-| KEMs                        |    |
-| --------------------------- | -- |
-| DHKEM (P-256, HKDF-SHA256)  | ✅ |
-| DHKEM (P-384, HKDF-SHA384)  | ✅ |
-| DHKEM (P-521, HKDF-SHA512)  | ✅ |
-| DHKEM (X25519, HKDF-SHA256) | ✅ |
-| DHKEM (X448, HKDF-SHA512)   | ✅ |
-
-
-### Key Derivation Functions (KDFs)
-
-| KDFs        |    |
-| ----------- | -- |
-| HKDF-SHA256 | ✅ |
-| HKDF-SHA384 | ✅ |
-| HKDF-SHA512 | ✅ |
-
-
-### Authenticated Encryption with Associated Data (AEAD) Functions
-
-| AEADs            |    |
-| ---------------- | -- |
-| AES-128-GCM      | ✅ |
-| AES-256-GCM      | ✅ |
-| ChaCha20Poly1305 | ✅ |
-| Export Only      | ✅ |
+Although this library has been passed all of the following official test vectors, it has not been formally audited.
+- [RFC9180 official test vectors provided on github.com/cfrg/draft-irtf-cfrg-hpke](https://github.com/cfrg/draft-irtf-cfrg-hpke/blob/5f503c564da00b0687b3de75f1dfbdfc4079ad31/test-vectors.json)
 
 ## Usage
 
