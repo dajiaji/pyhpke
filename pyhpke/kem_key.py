@@ -27,12 +27,18 @@ class KEMKey:
     A :class:`KEMKeyInterface <pyhpke.KEMKeyInterface>` Builder.
     """
 
-    # @classmethod
-    # def from_bytes(cls, data: bytes, kem_id: int) -> KEMKeyInterface:
-    #     """
-    #     Creates an HPKE key from a byte string.
-    #     """
-    #     return cls.new(params)
+    @classmethod
+    def from_pyca_cryptography_key(cls, k: Any) -> KEMKeyInterface:
+        """
+        Creates an HPKE key from `pyca/cryptography` key object.
+        """
+        if isinstance(k, EllipticCurvePrivateKey) or isinstance(k, EllipticCurvePublicKey):
+            return ECKey(k)
+        elif isinstance(k, X25519PrivateKey) or isinstance(k, X25519PublicKey):
+            return X25519Key(k)
+        elif isinstance(k, X448PrivateKey) or isinstance(k, X448PublicKey):
+            return X448Key(k)
+        raise ValueError("Unsupported or unknown key.")
 
     @classmethod
     def from_jwk(cls, data: Union[bytes, str, Dict[str, Any]]) -> KEMKeyInterface:
@@ -79,15 +85,7 @@ class KEMKey:
             k = load_pem_private_key(data, password=None)
         else:
             raise ValueError("Failed to decode PEM.")
-
-        if isinstance(k, EllipticCurvePrivateKey) or isinstance(k, EllipticCurvePublicKey):
-            return ECKey(k)
-        elif isinstance(k, X25519PrivateKey) or isinstance(k, X25519PublicKey):
-            return X25519Key(k)
-        elif isinstance(k, X448PrivateKey) or isinstance(k, X448PublicKey):
-            return X448Key(k)
-        raise ValueError("Unsupported or unknown key.")
-
+        return cls.from_pyca_cryptography_key(k);
 
 class KEMKeyPair(object):
     def __init__(self, sk: KEMKeyInterface, pk: KEMKeyInterface):
