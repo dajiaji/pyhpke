@@ -85,7 +85,8 @@ class KEMKey:
             k = load_pem_private_key(data, password=None)
         else:
             raise ValueError("Failed to decode PEM.")
-        return cls.from_pyca_cryptography_key(k);
+        return cls.from_pyca_cryptography_key(k)
+
 
 class KEMKeyPair(object):
     def __init__(self, sk: KEMKeyInterface, pk: KEMKeyInterface):
