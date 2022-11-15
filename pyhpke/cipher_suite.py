@@ -86,7 +86,6 @@ class CipherSuite(object):
             mode = Mode.PSK if sks is None else Mode.AUTH_PSK
 
         shared_secret, enc = self._kem.encap(pkr, sks, eks)
-        print(f"shared_secret: {shared_secret.hex()}")
         return enc, self._key_schedule_s(mode, shared_secret, info, psk, psk_id)
 
     def create_recipient_context(
@@ -156,7 +155,6 @@ class CipherSuite(object):
         psk_id_hash = kdf.labeled_extract(b"", b"psk_id_hash", psk_id)
         info_hash = kdf.labeled_extract(b"", b"info_hash", info)
         key_schedule_context = bytes([mode.value]) + psk_id_hash + info_hash
-        print(f"key_schedule_context: {key_schedule_context.hex()}")
 
         secret = kdf.labeled_extract(shared_secret, b"secret", psk)
 
