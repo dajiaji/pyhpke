@@ -15,8 +15,8 @@ jobs:
 
     strategy:
       matrix:
-        platform: [ubuntu-latest, windows-latest]
-        python-version: ["3.8", "3.9", "3.10"]
+        platform: [ubuntu-20.04, windows-latest]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
 
     steps:
     - uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
       run: poetry run tox
 
     - name: Upload coverage to Codecov
-      if: contains(env.USING_COVERAGE, matrix.python-version) && matrix.platform == 'ubuntu-latest'
+      if: contains(env.USING_COVERAGE, matrix.python-version) && matrix.platform == 'ubuntu-20.04'
       uses: codecov/codecov-action@v1
       with:
         fail_ci_if_error: true
@@ -42,7 +42,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-20.04, windows-latest, macos-latest]
 
     steps:
     - uses: actions/checkout@v2
