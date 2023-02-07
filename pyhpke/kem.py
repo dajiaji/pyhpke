@@ -17,7 +17,6 @@ class KEM(KEMInterface):
     """
 
     def __init__(self, kem_id: KEMId):
-
         self._id = kem_id
         self._prim: Any
         if kem_id == KEMId.DHKEM_P256_HKDF_SHA256:

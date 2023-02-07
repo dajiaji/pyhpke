@@ -17,7 +17,6 @@ class X25519Key(KEMKeyInterface):
     """
 
     def __init__(self, key: Any):
-
         if isinstance(key, X25519PrivateKey):
             self._is_public = False
         elif isinstance(key, X25519PublicKey):
