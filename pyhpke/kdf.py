@@ -14,7 +14,6 @@ class KDF(KDFInterface):
     """
 
     def __init__(self, kdf_id: KDFId, suite_id: bytes):
-
         h: Any = None
 
         if kdf_id == KDFId.HKDF_SHA256:

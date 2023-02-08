@@ -75,7 +75,6 @@ class CipherSuite(object):
         psk_id: bytes = b"",
         eks: Optional[KEMKeyPair] = None,
     ) -> Tuple[bytes, ContextInterface]:
-
         """
         Creates a sender context.
         """
@@ -148,7 +147,6 @@ class CipherSuite(object):
         psk: bytes,
         psk_id: bytes,
     ) -> Tuple[KDF, AEADParams]:
-
         suite_id = b"HPKE" + struct.pack(">HHH", self._kem.id.value, self._kdf.id.value, self._aead.id.value)
         kdf = KDF(self._kdf.id, suite_id)
 
@@ -171,7 +169,6 @@ class CipherSuite(object):
         psk: bytes,
         psk_id: bytes,
     ) -> ContextInterface:
-
         kdf, params = self._key_schedule(mode, shared_secret, info, psk, psk_id)
         if params.key == b"":
             return ExporterContext(kdf, params.exporter_secret)
@@ -185,7 +182,6 @@ class CipherSuite(object):
         psk: bytes,
         psk_id: bytes,
     ) -> ContextInterface:
-
         kdf, params = self._key_schedule(mode, shared_secret, info, psk, psk_id)
         if params.key == b"":
             return ExporterContext(kdf, params.exporter_secret)

@@ -19,7 +19,6 @@ class ECKey(KEMKeyInterface):
     """
 
     def __init__(self, key: Any):
-
         if isinstance(key, EllipticCurvePrivateKey):
             self._is_public = False
         elif isinstance(key, EllipticCurvePublicKey):

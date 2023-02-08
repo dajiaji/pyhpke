@@ -6,7 +6,6 @@ from .utils import xor_bytes
 
 class EncryptionContext(ExporterContext):
     def __init__(self, kdf: KDF, aead_params: AEADParams):
-
         self._key = aead_params.ctx.import_key(aead_params.key)
         self._seq = aead_params.seq
         self._nonce = aead_params.base_nonce

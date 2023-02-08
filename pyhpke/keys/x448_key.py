@@ -14,7 +14,6 @@ class X448Key(KEMKeyInterface):
     """
 
     def __init__(self, key: Any):
-
         if isinstance(key, X448PrivateKey):
             self._is_public = False
         elif isinstance(key, X448PublicKey):
