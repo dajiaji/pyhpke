@@ -25,7 +25,7 @@ exclude = [
 
 [tool.poetry.dependencies]
 python = "^3.7.0"
-cryptography = ">=36,<40"
+cryptography = ">=36,<41"
 Sphinx = {version = ">=4.3.2,<6.0.0", optional = true, extras = ["docs"]}
 sphinx-autodoc-typehints = {version = "1.21.0", optional = true, extras = ["docs"]}
 sphinx-rtd-theme = {version = "^1.0.0", optional = true, extras = ["docs"]}
