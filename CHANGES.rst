@@ -4,6 +4,21 @@ Changes
 Unreleased
 ----------
 
+Version 0.4.2
+-------------
+
+Released 2023-07-03
+
+- Add support for Python 3.11. `#97 <https://github.com/dajiaji/pyhpke/pull/97>`__
+- Drop support for Python 3.7. `#95 <https://github.com/dajiaji/pyhpke/pull/95>`__
+- Update dependencies.
+    - Bump cryptography to 41.0.0. `#99 <https://github.com/dajiaji/pyhpke/pull/99>`__
+- Update dev dependencies.
+    - Bump pytest to 7.4.0. `#93 <https://github.com/dajiaji/pyhpke/pull/93>`__
+    - Bump tox to 4.6.3. `#92 <https://github.com/dajiaji/pyhpke/pull/92>`__
+    - Bump sphinx-rtd-theme to 1.2.2. `#90 <https://github.com/dajiaji/pyhpke/pull/90>`__
+    - Bump pytest-cov to 4.1.0. `#85 <https://github.com/dajiaji/pyhpke/pull/85>`__
+
 Version 0.4.1
 -------------
 
