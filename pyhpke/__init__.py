@@ -9,7 +9,7 @@ from .kem_interface import KEMInterface
 from .kem_key import KEMKey, KEMKeyPair
 from .kem_key_interface import KEMKeyInterface
 
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 __title__ = "PyHPKE"
 __description__ = "A Python implementation of HPKE."
 __url__ = "https://pyhpke.readthedocs.io"
