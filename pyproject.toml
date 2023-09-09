@@ -41,4 +41,4 @@ docs = [
 pytest = "^7.4"
 pytest-cov = "^4.1.0"
 tox = "^4.11.0"
-pre-commit = "^3.3.3"
+pre-commit = "^3.4.0"
