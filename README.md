@@ -22,7 +22,9 @@ And then, you can use it as follows:
 from pyhpke import AEADId, CipherSuite, KDFId, KEMId, KEMKey
 
 # The sender side:
-suite_s = CipherSuite.new(KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM)
+suite_s = CipherSuite.new(
+    KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM
+)
 pkr = KEMKey.from_jwk(  # from_pem is also available.
     {
         "kid": "01",
@@ -36,7 +38,9 @@ enc, sender = suite_s.create_sender_context(pkr)
 ct = sender.seal(b"Hello world!")
 
 # The recipient side:
-suite_r = CipherSuite.new(KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM)
+suite_r = CipherSuite.new(
+    KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM
+)
 skr = KEMKey.from_jwk(
     {
         "kid": "01",
@@ -107,7 +111,9 @@ Although this library has been passed all of the following official test vectors
 from pyhpke import AEADId, CipherSuite, KDFId, KEMId, KEMKey
 
 # The sender side:
-suite_s = CipherSuite.new(KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM)
+suite_s = CipherSuite.new(
+    KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM
+)
 pkr = KEMKey.from_jwk(
     {
         "kid": "01",
@@ -121,7 +127,9 @@ enc, sender = suite_s.create_sender_context(pkr)
 ct = sender.seal(b"Hello world!")
 
 # The recipient side:
-suite_r = CipherSuite.new(KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM)
+suite_r = CipherSuite.new(
+    KEMId.DHKEM_P256_HKDF_SHA256, KDFId.HKDF_SHA256, AEADId.AES128_GCM
+)
 skr = KEMKey.from_jwk(
     {
         "kid": "01",
