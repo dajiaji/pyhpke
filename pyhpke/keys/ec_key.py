@@ -68,7 +68,7 @@ class ECKey(KEMKeyInterface):
             else:
                 raise ValueError("Coords should be 66 bytes for curve P-521")
         else:
-            raise ValueError(f"Invalid curve: {crv}")
+            raise ValueError(f"Invalid curve: {jwk['crv']}.")
 
         public_numbers = ec.EllipticCurvePublicNumbers(
             x=int.from_bytes(x, byteorder="big"),
