@@ -952,13 +952,13 @@ docs = ["furo", "ipython", "myst-parser", "sphinx-copybutton", "sphinx-inline-ta
 
 [[package]]
 name = "sphinx-rtd-theme"
-version = "2.0.0rc2"
+version = "2.0.0rc3"
 description = "Read the Docs theme for Sphinx"
 optional = true
 python-versions = ">=3.6"
 files = [
-    {file = "sphinx_rtd_theme-2.0.0rc2-py2.py3-none-any.whl", hash = "sha256:f04df9213acf421c3b42f4f39005c8bc68fc4696c5b4ed4ef13d1678369713f7"},
-    {file = "sphinx_rtd_theme-2.0.0rc2.tar.gz", hash = "sha256:d1270effe620df9164b1cd2d617909472a63531e21a716fd22d0fbcedf9d24ff"},
+    {file = "sphinx_rtd_theme-2.0.0rc3-py2.py3-none-any.whl", hash = "sha256:9f1b959ba570ea3795cc3e057955d2720533291fa2b8b4e8f43c4ec94a21f732"},
+    {file = "sphinx_rtd_theme-2.0.0rc3.tar.gz", hash = "sha256:c7157c46ee75f8c223781fb553b9881861613931ed7daccbb31f4113fb2c183e"},
 ]
 
 [package.dependencies]
