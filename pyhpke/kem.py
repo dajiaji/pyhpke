@@ -56,9 +56,7 @@ class KEM(KEMInterface):
 
     def extract_and_expand(self, dh: bytes, kem_context: bytes, length: int) -> bytes:
         eae_prk = self._kdf.labeled_extract(b"", b"eae_prk", dh)
-        shared_secret = self._kdf.labeled_expand(
-            eae_prk, b"shared_secret", kem_context, length
-        )
+        shared_secret = self._kdf.labeled_expand(eae_prk, b"shared_secret", kem_context, length)
         return shared_secret
 
     def deserialize_private_key(self, key: bytes) -> KEMKeyInterface:
@@ -89,18 +87,12 @@ class KEM(KEMInterface):
             dh2 = self._prim.exchange(sks, pkr)
             dh = dh1 + dh2
             pks = self._prim.derive_public_key(sks)
-            kem_context = (
-                enc
-                + self._prim.serialize_public_key(pkr)
-                + self._prim.serialize_public_key(pks)
-            )
+            kem_context = enc + self._prim.serialize_public_key(pkr) + self._prim.serialize_public_key(pks)
 
         shared_secret = self.extract_and_expand(dh, kem_context, self._nsecret)
         return shared_secret, enc
 
-    def decap(
-        self, enc: bytes, skr: KEMKeyInterface, pks: Optional[KEMKeyInterface] = None
-    ) -> bytes:
+    def decap(self, enc: bytes, skr: KEMKeyInterface, pks: Optional[KEMKeyInterface] = None) -> bytes:
         """ """
         pke = self._prim.deserialize_public_key(enc)
         pkr = self._prim.derive_public_key(skr)
@@ -111,11 +103,7 @@ class KEM(KEMInterface):
             dh1 = self._prim.exchange(skr, pke)
             dh2 = self._prim.exchange(skr, pks)
             dh = dh1 + dh2
-            kem_context = (
-                enc
-                + self._prim.serialize_public_key(pkr)
-                + self._prim.serialize_public_key(pks)
-            )
+            kem_context = enc + self._prim.serialize_public_key(pkr) + self._prim.serialize_public_key(pks)
 
         shared_secret = self.extract_and_expand(dh, kem_context, self._nsecret)
         return shared_secret
@@ -124,10 +112,7 @@ class KEM(KEMInterface):
         kdf = self._kdf
         old_nsecret = self._nsecret
 
-        if (
-            self.id == KEMId.DHKEM_P256_HKDF_SHA256
-            or self.id == KEMId.DHKEM_P384_HKDF_SHA384
-        ):
+        if self.id == KEMId.DHKEM_P256_HKDF_SHA256 or self.id == KEMId.DHKEM_P384_HKDF_SHA384:
             sk_raw = _ec_derive_key_pair(ikm, kdf, self)
         elif self.id == KEMId.DHKEM_P521_HKDF_SHA512:
             self._nsecret = 66
@@ -177,11 +162,7 @@ def _ec_derive_key_pair(ikm: bytes, kdf: KDF, kem: KEM) -> bytes:
     while sk == 0 or sk >= order:
         if counter > 255:
             raise ValueError("could not derive keypair")
-        raw_key = bytearray(
-            kdf.labeled_expand(
-                dkp_prk, b"candidate", counter.to_bytes(1, "big"), kem._nsecret
-            )
-        )
+        raw_key = bytearray(kdf.labeled_expand(dkp_prk, b"candidate", counter.to_bytes(1, "big"), kem._nsecret))
 
         raw_key[0] = raw_key[0] & bitmask
         sk = int.from_bytes(raw_key)
