@@ -15,6 +15,7 @@ class KEM(KEMInterface):
     """
     The KEM (Key Encapsulation Mechanism) interface.
     """
+    _nsecret: int
 
     def __init__(self, kem_id: KEMId):
         self._id = kem_id
@@ -129,14 +130,14 @@ class KEM(KEMInterface):
         return KEMKeyPair(private_key, public_key)
 
 
-def _x_derive_key_pair(ikm: bytes, kdf: KDF, kem: KEMInterface) -> bytes:
+def _x_derive_key_pair(ikm: bytes, kdf: KDF, kem: KEM) -> bytes:
     # according to https://www.rfc-editor.org/rfc/rfc9180#section-7.1.3-9
     dkp_prk = kdf.labeled_extract(b"", b"dkp_prk", ikm)
     sk = kdf.labeled_expand(dkp_prk, b"sk", b"", kem._nsecret)
     return sk
 
 
-def _ec_derive_key_pair(ikm: bytes, kdf: KDF, kem: KEMInterface) -> bytes:
+def _ec_derive_key_pair(ikm: bytes, kdf: KDF, kem: KEM) -> bytes:
     # see https://www.rfc-editor.org/rfc/rfc9180#section-7.1.3-4
 
     dkp_prk = kdf.labeled_extract(b"", b"dkp_prk", ikm)
