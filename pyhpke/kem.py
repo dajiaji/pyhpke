@@ -165,6 +165,6 @@ def _ec_derive_key_pair(ikm: bytes, kdf: KDF, kem: KEM) -> bytes:
         raw_key = bytearray(kdf.labeled_expand(dkp_prk, b"candidate", counter.to_bytes(1, "big"), kem._nsecret))
 
         raw_key[0] = raw_key[0] & bitmask
-        sk = int.from_bytes(raw_key)
+        sk = int.from_bytes(raw_key, "big")
         counter = counter + 1
     return sk.to_bytes(kem._nsecret, "big", signed=False)
