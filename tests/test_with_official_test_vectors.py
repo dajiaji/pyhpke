@@ -4,14 +4,7 @@ from typing import Optional
 
 import pytest
 
-from pyhpke import (
-    AEADId,
-    CipherSuite,
-    KDFId,
-    KEMId,
-    KEMKeyInterface,
-    KEMKeyPair,
-)
+from pyhpke import AEADId, CipherSuite, KDFId, KEMId, KEMKeyInterface, KEMKeyPair
 
 
 class TestWithOfficialTestVectors:

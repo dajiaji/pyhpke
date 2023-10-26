@@ -15,6 +15,7 @@ class KEM(KEMInterface):
     """
     The KEM (Key Encapsulation Mechanism) interface.
     """
+
     _nsecret: int
 
     def __init__(self, kem_id: KEMId):
