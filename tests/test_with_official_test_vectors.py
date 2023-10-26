@@ -4,7 +4,7 @@ from typing import Optional
 
 import pytest
 
-from pyhpke import AEADId, CipherSuite, KDFId, KEMId, KEMKeyInterface, KEMKeyPair
+from pyhpke import AEADId, CipherSuite, KDFId, KEMId, KEMKeyInterface, KEMKeyPair, DeriveKeyPair
 
 
 class TestWithOfficialTestVectors:
@@ -32,8 +32,18 @@ class TestWithOfficialTestVectors:
             pks = suite.kem.deserialize_public_key(bytes.fromhex(v["pkSm"]))
 
         # TODO derive_key_pair
-        # ikme = bytes.fromhex(v["ikmE"])
-        # ikmr = bytes.fromhex(v["ikmR"])
+        ikme = bytes.fromhex(v["ikmE"])
+        ikme_keypair = suite.kem.derive_key_pair(ikme)
+        print(v["kem_id"], suite.kem.id)
+        print(v["kdf_id"], suite.kdf.id)
+        print(v["aead_id"], suite.aead.id)
+        assert ikme_keypair.private_key.to_private_bytes() == ske.to_private_bytes()
+        assert ikme_keypair.public_key.to_public_bytes() == pke.to_public_bytes()
+
+        ikmr = bytes.fromhex(v["ikmR"])
+        ikmr_keypair = suite.kem.derive_key_pair(ikmr)
+        assert ikmr_keypair.private_key.to_private_bytes() == skr.to_private_bytes()
+        assert ikmr_keypair.public_key.to_public_bytes() == pkr.to_public_bytes()
 
         # create_{sender,recipient}_context
         info = bytes.fromhex(v["info"])
