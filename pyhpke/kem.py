@@ -4,7 +4,7 @@ from typing import Any, Optional, Tuple
 from .consts import KDFId, KEMId
 from .kdf import KDF
 from .kem_interface import KEMInterface
-from .kem_key import KEMKeyPair, KEMKey
+from .kem_key import KEMKey, KEMKeyPair
 from .kem_key_interface import KEMKeyInterface
 from .kem_primitives.ec import EC
 from .kem_primitives.x448 import X448
@@ -103,7 +103,7 @@ class KEM(KEMInterface):
         shared_secret = self.extract_and_expand(dh, kem_context, self._nsecret)
         return shared_secret
 
-    def derive_key_pair(self, ikm:bytes):
+    def derive_key_pair(self, ikm: bytes):
         kdf = self._kdf
         old_nsecret = self._nsecret
 
@@ -127,7 +127,6 @@ class KEM(KEMInterface):
         public_key = KEMKey.from_pyca_cryptography_key(private_key._key.public_key())
 
         return KEMKeyPair(private_key, public_key)
-    
 
 
 def _x_derive_key_pair(ikm: bytes, kdf: KDF, kem: KEMInterface) -> bytes:
@@ -159,11 +158,7 @@ def _ec_derive_key_pair(ikm: bytes, kdf: KDF, kem: KEMInterface) -> bytes:
     while sk == 0 or sk >= order:
         if counter > 255:
             raise ValueError("could not derive keypair")
-        raw_key = bytearray(
-            kdf.labeled_expand(
-                dkp_prk, b"candidate", counter.to_bytes(1, "big"), kem._nsecret
-            )
-        )
+        raw_key = bytearray(kdf.labeled_expand(dkp_prk, b"candidate", counter.to_bytes(1, "big"), kem._nsecret))
 
         raw_key[0] = raw_key[0] & bitmask
         sk = int.from_bytes(raw_key)
