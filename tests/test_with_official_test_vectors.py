@@ -7,7 +7,6 @@ import pytest
 from pyhpke import (
     AEADId,
     CipherSuite,
-    DeriveKeyPair,
     KDFId,
     KEMId,
     KEMKeyInterface,
