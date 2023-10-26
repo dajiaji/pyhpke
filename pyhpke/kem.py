@@ -4,7 +4,7 @@ from typing import Any, Optional, Tuple
 from .consts import KDFId, KEMId
 from .kdf import KDF
 from .kem_interface import KEMInterface
-from .kem_key import KEMKeyPair
+from .kem_key import KEMKeyPair, KEMKey
 from .kem_key_interface import KEMKeyInterface
 from .kem_primitives.ec import EC
 from .kem_primitives.x448 import X448
@@ -102,3 +102,70 @@ class KEM(KEMInterface):
 
         shared_secret = self.extract_and_expand(dh, kem_context, self._nsecret)
         return shared_secret
+
+    def derive_key_pair(self, ikm:bytes):
+        kdf = self._kdf
+        old_nsecret = self._nsecret
+
+        if self.id == KEMId.DHKEM_P256_HKDF_SHA256 or self.id == KEMId.DHKEM_P384_HKDF_SHA384:
+            sk_raw = _ec_derive_key_pair(ikm, kdf, self)
+        elif self.id == KEMId.DHKEM_P521_HKDF_SHA512:
+            self._nsecret = 66
+            sk_raw = _ec_derive_key_pair(ikm, kdf, self)
+        elif self.id == KEMId.DHKEM_X25519_HKDF_SHA256:
+            sk_raw = _x_derive_key_pair(ikm, kdf, self)
+        elif self.id == KEMId.DHKEM_X448_HKDF_SHA512:
+            self._nsecret = 56
+            sk_raw = _x_derive_key_pair(ikm, kdf, self)
+        else:
+            raise ValueError("could not derive secret key")
+
+        self._nsecret = old_nsecret
+
+        # return the kemkeyinterface of the deserialized private key.
+        private_key = self.deserialize_private_key(sk_raw)
+        public_key = KEMKey.from_pyca_cryptography_key(private_key._key.public_key())
+
+        return KEMKeyPair(private_key, public_key)
+    
+
+
+def _x_derive_key_pair(ikm: bytes, kdf: KDF, kem: KEMInterface) -> bytes:
+    # according to https://www.rfc-editor.org/rfc/rfc9180#section-7.1.3-9
+    dkp_prk = kdf.labeled_extract(b"", b"dkp_prk", ikm)
+    sk = kdf.labeled_expand(dkp_prk, b"sk", b"", kem._nsecret)
+    return sk
+
+
+def _ec_derive_key_pair(ikm: bytes, kdf: KDF, kem: KEMInterface) -> bytes:
+    # see https://www.rfc-editor.org/rfc/rfc9180#section-7.1.3-4
+
+    dkp_prk = kdf.labeled_extract(b"", b"dkp_prk", ikm)
+    match kem.id:
+        case KEMId.DHKEM_P256_HKDF_SHA256:
+            bitmask = 0xFF
+            order = 0xFFFFFFFF00000000FFFFFFFFFFFFFFFFBCE6FAADA7179E84F3B9CAC2FC632551
+        case KEMId.DHKEM_P384_HKDF_SHA384:
+            bitmask = 0xFF
+            order = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC7634D81F4372DDF581A0DB248B0A77AECEC196ACCC52973
+        case KEMId.DHKEM_P521_HKDF_SHA512:
+            bitmask = 0x01
+            order = 0x01FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA51868783BF2F966B7FCC0148F709A5D03BB5C9B8899C47AEBB6FB71E91386409
+        case _:
+            raise ValueError(f"Unknown KEMid {kem.id}")
+
+    sk = 0
+    counter = 0
+    while sk == 0 or sk >= order:
+        if counter > 255:
+            raise ValueError("could not derive keypair")
+        raw_key = bytearray(
+            kdf.labeled_expand(
+                dkp_prk, b"candidate", counter.to_bytes(1, "big"), kem._nsecret
+            )
+        )
+
+        raw_key[0] = raw_key[0] & bitmask
+        sk = int.from_bytes(raw_key)
+        counter = counter + 1
+    return sk.to_bytes(kem._nsecret, "big", signed=False)
