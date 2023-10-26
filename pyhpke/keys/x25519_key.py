@@ -58,6 +58,11 @@ class X25519Key(KEMKeyInterface):
             raise ValueError(f"D should be {len(x)} bytes for {jwk['crv']}")
         return cls(X25519PrivateKey.from_private_bytes(d))
 
+    def to_private_bytes(self) -> bytes:
+        if self._is_public:
+            raise ValueError("The key is public")
+        return self._key.private_bytes_raw()
+
     def to_public_bytes(self) -> bytes:
         """
         Serializes the key to a byte string.

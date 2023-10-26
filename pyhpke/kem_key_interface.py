@@ -13,6 +13,12 @@ class KEMKeyInterface:
     def raw(self) -> Any:
         return self._key
 
+    def to_private_bytes(self) -> bytes:
+        """
+        Serializes the key to a byte string if it is private.
+        """
+        raise NotImplementedError()
+
     def to_public_bytes(self) -> bytes:
         """
         Serializes the key to a byte string if it is public.
