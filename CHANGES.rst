@@ -4,6 +4,27 @@ Changes
 Unreleased
 ----------
 
+Version 0.5.0
+-------------
+
+Released 2023-10-27
+
+- Add derive_key_pair to KEM interface. `#133 <https://github.com/dajiaji/pyhpke/pull/133>`__
+- Update dependencies.
+    - Bump cryptography to 41.0.5. `#130 <https://github.com/dajiaji/pyhpke/pull/130>`__
+- Update dev dependencies.
+    - Bump pytest to 7.4.3. `#132 <https://github.com/dajiaji/pyhpke/pull/132>`__
+    - Bump sphinx-rtd-theme to 2.0.0rc3. `#131 <https://github.com/dajiaji/pyhpke/pull/131>`__
+    - Bump black to 23.10.1. `#129 <https://github.com/dajiaji/pyhpke/pull/129>`__
+    - Bump pre-commit/mirrors-mypy to 1.6.1. `#129 <https://github.com/dajiaji/pyhpke/pull/129>`__
+    - Bump pre-commit to 3.5.0. `#127 <https://github.com/dajiaji/pyhpke/pull/127>`__
+    - Bump blacken-docs to 1.16.0. `#123 <https://github.com/dajiaji/pyhpke/pull/123>`__
+    - Bump flake8 to 6.1.0. `#123 <https://github.com/dajiaji/pyhpke/pull/123>`__
+    - Bump pytest to 7.4.2. `#122 <https://github.com/dajiaji/pyhpke/pull/122>`__
+    - Bump tox to 4.11.3. `#121 <https://github.com/dajiaji/pyhpke/pull/121>`__
+    - Bump sphinx-autodoc-typehints to 1.24.0. `#114 <https://github.com/dajiaji/pyhpke/pull/114>`__
+    - Bump sphinx to 7.1.2. `#113 <https://github.com/dajiaji/pyhpke/pull/113>`__
+
 Version 0.4.2
 -------------
 

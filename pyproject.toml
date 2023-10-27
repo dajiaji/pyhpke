@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "pyhpke"
-version = "0.4.2"
+version = "0.5.0"
 description = "A Python implementation of HPKE."
 authors = ["Ajitomi Daisuke <dajiaji@gmail.com>"]
 license = "MIT"
