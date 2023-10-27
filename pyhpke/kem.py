@@ -51,15 +51,13 @@ class KEM(KEMInterface):
         The AEAD identifier.
         """
         return self._id
-    
+
     def derive_key_pair(self, ikm: bytes) -> KEMKeyPair:
         return self._prim.derive_key_pair(ikm, self._kdf)
 
     def extract_and_expand(self, dh: bytes, kem_context: bytes, length: int) -> bytes:
         eae_prk = self._kdf.labeled_extract(b"", b"eae_prk", dh)
-        shared_secret = self._kdf.labeled_expand(
-            eae_prk, b"shared_secret", kem_context, length
-        )
+        shared_secret = self._kdf.labeled_expand(eae_prk, b"shared_secret", kem_context, length)
         return shared_secret
 
     def deserialize_private_key(self, key: bytes) -> KEMKeyInterface:
@@ -90,18 +88,12 @@ class KEM(KEMInterface):
             dh2 = self._prim.exchange(sks, pkr)
             dh = dh1 + dh2
             pks = self._prim.derive_public_key(sks)
-            kem_context = (
-                enc
-                + self._prim.serialize_public_key(pkr)
-                + self._prim.serialize_public_key(pks)
-            )
+            kem_context = enc + self._prim.serialize_public_key(pkr) + self._prim.serialize_public_key(pks)
 
         shared_secret = self.extract_and_expand(dh, kem_context, self._nsecret)
         return shared_secret, enc
 
-    def decap(
-        self, enc: bytes, skr: KEMKeyInterface, pks: Optional[KEMKeyInterface] = None
-    ) -> bytes:
+    def decap(self, enc: bytes, skr: KEMKeyInterface, pks: Optional[KEMKeyInterface] = None) -> bytes:
         """ """
         pke = self._prim.deserialize_public_key(enc)
         pkr = self._prim.derive_public_key(skr)
@@ -112,11 +104,7 @@ class KEM(KEMInterface):
             dh1 = self._prim.exchange(skr, pke)
             dh2 = self._prim.exchange(skr, pks)
             dh = dh1 + dh2
-            kem_context = (
-                enc
-                + self._prim.serialize_public_key(pkr)
-                + self._prim.serialize_public_key(pks)
-            )
+            kem_context = enc + self._prim.serialize_public_key(pkr) + self._prim.serialize_public_key(pks)
 
         shared_secret = self.extract_and_expand(dh, kem_context, self._nsecret)
         return shared_secret

@@ -2,11 +2,11 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import ec
 
 from ..consts import KEMId
-from ..kem_key import KEMKeyPair, KEMKey
+from ..kdf import KDF
+from ..kem_key import KEMKey, KEMKeyPair
 from ..kem_key_interface import KEMKeyInterface
 from ..kem_primitives_interface import KEMPrimitivesInterface
 from ..keys.ec_key import ECKey
-from ..kdf import KDF
 
 # from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 
@@ -24,9 +24,7 @@ class EC(KEMPrimitivesInterface):
             self._nsecret = 32
             self._nsk = 32
             self._bitmask = 0xFF
-            self._order = (
-                0xFFFFFFFF00000000FFFFFFFFFFFFFFFFBCE6FAADA7179E84F3B9CAC2FC632551
-            )
+            self._order = 0xFFFFFFFF00000000FFFFFFFFFFFFFFFFBCE6FAADA7179E84F3B9CAC2FC632551
         elif kem_id == KEMId.DHKEM_P384_HKDF_SHA384:
             self._crv = ec.SECP384R1()
             self._nsecret = 48
@@ -47,7 +45,7 @@ class EC(KEMPrimitivesInterface):
         pk = sk.public_key()
         return KEMKeyPair(ECKey(sk), ECKey(pk))
 
-    def derive_key_pair(self, ikm: bytes, kdf:KDF) -> KEMKeyPair:
+    def derive_key_pair(self, ikm: bytes, kdf: KDF) -> KEMKeyPair:
         dkp_prk = kdf.labeled_extract(b"", b"dkp_prk", ikm)
 
         sk = 0
@@ -55,11 +53,7 @@ class EC(KEMPrimitivesInterface):
         while sk == 0 or sk >= self._order:
             if counter > 255:
                 raise ValueError("could not derive keypair")
-            raw_key = bytearray(
-                kdf.labeled_expand(
-                    dkp_prk, b"candidate", counter.to_bytes(1, "big"), self._nsk
-                )
-            )
+            raw_key = bytearray(kdf.labeled_expand(dkp_prk, b"candidate", counter.to_bytes(1, "big"), self._nsk))
 
             raw_key[0] = raw_key[0] & self._bitmask
             sk = int.from_bytes(raw_key, "big")

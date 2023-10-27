@@ -1,17 +1,18 @@
 from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey
 
-from ..kem_key import KEMKeyPair, KEMKey
+from ..kdf import KDF
+from ..kem_key import KEMKey, KEMKeyPair
 from ..kem_key_interface import KEMKeyInterface
 from ..kem_primitives_interface import KEMPrimitivesInterface
 from ..keys.x25519_key import X25519Key
-from ..kdf import KDF
 
 # from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 
 
 class X25519(KEMPrimitivesInterface):
     """ """
-    _kdf:KDF
+
+    _kdf: KDF
 
     def __init__(self):
         self._nsecret = 32
@@ -22,7 +23,7 @@ class X25519(KEMPrimitivesInterface):
         pk = sk.public_key()
         return KEMKeyPair(X25519Key(sk), X25519Key(pk))
 
-    def derive_key_pair(self, ikm: bytes, kdf:KDF) -> KEMKeyPair:
+    def derive_key_pair(self, ikm: bytes, kdf: KDF) -> KEMKeyPair:
         dkp_prk = kdf.labeled_extract(b"", b"dkp_prk", ikm)
         sk = kdf.labeled_expand(dkp_prk, b"sk", b"", self._nsk)
         private_key = self.deserialize_private_key(sk)

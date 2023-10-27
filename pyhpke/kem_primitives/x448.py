@@ -1,10 +1,10 @@
 from cryptography.hazmat.primitives.asymmetric.x448 import X448PrivateKey
 
-from ..kem_key import KEMKeyPair, KEMKey
+from ..kdf import KDF
+from ..kem_key import KEMKey, KEMKeyPair
 from ..kem_key_interface import KEMKeyInterface
 from ..kem_primitives_interface import KEMPrimitivesInterface
 from ..keys.x448_key import X448Key
-from ..kdf import KDF
 
 
 class X448(KEMPrimitivesInterface):
@@ -21,7 +21,7 @@ class X448(KEMPrimitivesInterface):
         pk = sk.public_key()
         return KEMKeyPair(X448Key(sk), X448Key(pk))
 
-    def derive_key_pair(self, ikm: bytes, kdf:KDF) -> KEMKeyPair:
+    def derive_key_pair(self, ikm: bytes, kdf: KDF) -> KEMKeyPair:
         dkp_prk = kdf.labeled_extract(b"", b"dkp_prk", ikm)
         sk = kdf.labeled_expand(dkp_prk, b"sk", b"", self._nsk)
         private_key = self.deserialize_private_key(sk)
