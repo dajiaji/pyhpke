@@ -16,8 +16,6 @@ class EC(KEMPrimitivesInterface):
     The KEM (Key Encapsulation Mechanism) context.
     """
 
-    _kdf: KDF
-
     def __init__(self, kem_id: KEMId):
         if kem_id == KEMId.DHKEM_P256_HKDF_SHA256:
             self._crv = ec.SECP256R1()

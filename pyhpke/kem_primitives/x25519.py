@@ -12,8 +12,6 @@ from ..keys.x25519_key import X25519Key
 class X25519(KEMPrimitivesInterface):
     """ """
 
-    _kdf: KDF
-
     def __init__(self):
         self._nsecret = 32
         self._nsk = 32
