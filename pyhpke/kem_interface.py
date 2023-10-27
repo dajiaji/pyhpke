@@ -30,3 +30,6 @@ class KEMInterface(object):
 
     def decap(self, enc: bytes, skr: KEMKeyInterface, pks: Optional[KEMKeyInterface] = None) -> bytes:
         raise NotImplementedError()
+
+    def derive_key_pair(self, ikm: bytes) -> KEMKeyPair:
+        raise NotImplementedError()
