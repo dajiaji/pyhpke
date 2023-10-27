@@ -5,7 +5,12 @@ from cryptography.hazmat.primitives.asymmetric.ec import (
     EllipticCurvePrivateKey,
     EllipticCurvePublicKey,
 )
-from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
+from cryptography.hazmat.primitives.serialization import (
+    Encoding,
+    NoEncryption,
+    PrivateFormat,
+    PublicFormat,
+)
 
 from ..consts import HPKE_SUPPORTED_JWK_EC_CRVS
 from ..kem_key_interface import KEMKeyInterface
@@ -84,6 +89,11 @@ class ECKey(KEMKeyInterface):
             raise ValueError(f"D should be {len(x)} bytes for curve {jwk['crv']}")
 
         return cls(ec.EllipticCurvePrivateNumbers(int.from_bytes(d, byteorder="big"), public_numbers).private_key())
+
+    def to_private_bytes(self) -> bytes:
+        if self._is_public:
+            raise ValueError("The key is public")
+        return self._key.private_bytes(Encoding.DER, PrivateFormat.PKCS8, NoEncryption())
 
     def to_public_bytes(self) -> bytes:
         """

@@ -52,6 +52,9 @@ class KEM(KEMInterface):
         """
         return self._id
 
+    def derive_key_pair(self, ikm: bytes) -> KEMKeyPair:
+        return self._prim.derive_key_pair(ikm, self._kdf)
+
     def extract_and_expand(self, dh: bytes, kem_context: bytes, length: int) -> bytes:
         eae_prk = self._kdf.labeled_extract(b"", b"eae_prk", dh)
         shared_secret = self._kdf.labeled_expand(eae_prk, b"shared_secret", kem_context, length)
@@ -64,7 +67,10 @@ class KEM(KEMInterface):
         return self._prim.deserialize_public_key(key)
 
     def encap(
-        self, pkr: KEMKeyInterface, sks: Optional[KEMKeyInterface] = None, eks: Optional[KEMKeyPair] = None
+        self,
+        pkr: KEMKeyInterface,
+        sks: Optional[KEMKeyInterface] = None,
+        eks: Optional[KEMKeyPair] = None,
     ) -> Tuple[bytes, bytes]:
         """ """
         if eks is None:

@@ -1,3 +1,4 @@
+from .kdf import KDF
 from .kem_key import KEMKeyInterface, KEMKeyPair
 
 
@@ -9,7 +10,7 @@ class KEMPrimitivesInterface(object):
     def generate_key_pair(self) -> KEMKeyPair:
         raise NotImplementedError()
 
-    def derive_key_pair(self, ikm: bytes) -> KEMKeyPair:
+    def derive_key_pair(self, ikm: bytes, kdf: KDF) -> KEMKeyPair:
         raise NotImplementedError()
 
     def serialize_private_key(self, key: bytes) -> KEMKeyInterface:
