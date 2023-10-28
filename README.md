@@ -55,6 +55,10 @@ recipient = suite_r.create_recipient_context(enc, skr)
 pt = recipient.open(ct)
 
 assert pt == b"Hello world!"
+
+
+# deriving a KEMKeyPair
+keypair = suite_s.kem.derive_key_pair(b"some_ikm_bytes_used_for_key_derivation")
 ```
 
 ## Index
