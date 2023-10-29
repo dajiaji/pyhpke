@@ -5,10 +5,7 @@ from cryptography.hazmat.primitives.asymmetric.ec import (
     EllipticCurvePrivateKey,
     EllipticCurvePublicKey,
 )
-from cryptography.hazmat.primitives.serialization import (
-    Encoding,
-    PublicFormat,
-)
+from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 
 from ..consts import HPKE_SUPPORTED_JWK_EC_CRVS
 from ..kem_key_interface import KEMKeyInterface
