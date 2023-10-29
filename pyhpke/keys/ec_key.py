@@ -93,7 +93,8 @@ class ECKey(KEMKeyInterface):
     def to_private_bytes(self) -> bytes:
         if self._is_public:
             raise ValueError("The key is public")
-        return self._key.private_bytes(Encoding.DER, PrivateFormat.PKCS8, NoEncryption())
+        private_value = self._key.private_numbers().private_value # type: int
+        return private_value.to_bytes(self._key.key_size, "big")
 
     def to_public_bytes(self) -> bytes:
         """
