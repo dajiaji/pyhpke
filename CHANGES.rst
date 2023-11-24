@@ -4,6 +4,31 @@ Changes
 Unreleased
 ----------
 
+Version 0.5.2
+-------------
+
+Released 2023-11-25
+
+- Tighten the range of pyca/cryptography version. `#147 <https://github.com/dajiaji/pyhpke/pull/147>`__
+- Add Python 3.12 to tox.ini. `#147 <https://github.com/dajiaji/pyhpke/pull/147>`__
+- Fix .readthedocs.yml. `#146 <https://github.com/dajiaji/pyhpke/pull/146>`__
+- Update dependencies.
+    - Bump cryptography to 41.0.5. `#130 <https://github.com/dajiaji/pyhpke/pull/130>`__
+- Update dev dependencies.
+    - Bump actions/{checkout, setup-python} to v4. `#145 <https://github.com/dajiaji/pyhpke/pull/145>`__
+    - Bump black to 23.11.0. `#144 <https://github.com/dajiaji/pyhpke/pull/144>`__
+    - Bump pre-commit/mirrors-mypy to 1.7.0. `#144 <https://github.com/dajiaji/pyhpke/pull/144>`__
+    - Bump sphinx-autodoc-typehints to 1.25.2. `#143 <https://github.com/dajiaji/pyhpke/pull/143>`__
+    - Bump sphinx-rtd-theme to 2.0.0rc4. `#141 <https://github.com/dajiaji/pyhpke/pull/141>`__
+
+Version 0.5.1
+-------------
+
+Released 2023-10-30
+
+- Fix bug on EC serialization. `#137 <https://github.com/dajiaji/pyhpke/pull/137>`__
+- Add example for derive_key_pair to README. `#136 <https://github.com/dajiaji/pyhpke/pull/136>`__
+
 Version 0.5.0
 -------------
 
