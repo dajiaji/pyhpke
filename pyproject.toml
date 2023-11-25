@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "pyhpke"
-version = "0.5.1"
+version = "0.5.2"
 description = "A Python implementation of HPKE."
 authors = ["Ajitomi Daisuke <dajiaji@gmail.com>"]
 license = "MIT"
@@ -25,7 +25,7 @@ exclude = [
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
-cryptography = ">=41.0.3"
+cryptography = ">=41.0.5,<42"
 Sphinx = {version = ">=6,<8", optional = true, extras = ["docs"]}
 sphinx-autodoc-typehints = {version = ">=1.24.0", optional = true, extras = ["docs"]}
 sphinx-rtd-theme = {version = ">=1.2.1", optional = true, extras = ["docs"]}
