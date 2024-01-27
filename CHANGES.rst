@@ -4,6 +4,24 @@ Changes
 Unreleased
 ----------
 
+Version 0.5.3
+-------------
+
+Released 2024-01-27
+
+- Update dependencies.
+    - Bump cryptography to 42.0.1. `#163 <https://github.com/dajiaji/pyhpke/pull/163>`__
+- Update dev dependencies.
+    - Bump sphinx-autodoc-typehints to 1.25.3. `#164 <https://github.com/dajiaji/pyhpke/pull/164>`__
+    - Bump tox to 4.12.1. `#161 <https://github.com/dajiaji/pyhpke/pull/161>`__
+    - Bump flake8 to 7.0.0. `#159 <https://github.com/dajiaji/pyhpke/pull/159>`__
+    - Bump pytest to 7.4.4. `#158 <https://github.com/dajiaji/pyhpke/pull/158>`__
+    - Bump black to 23.12.1. `#157 <https://github.com/dajiaji/pyhpke/pull/157>`__
+    - Bump pre-commit/mirrors-mypy to 1.7.1. `#157 <https://github.com/dajiaji/pyhpke/pull/157>`__
+    - Bump isort to 5.13.2. `#156 <https://github.com/dajiaji/pyhpke/pull/156>`__
+    - Update Sphinx version to over 7.1. `#154 <https://github.com/dajiaji/pyhpke/pull/154>`__
+    - Bump sphinx-rtd-theme to 2.0.0. `#153 <https://github.com/dajiaji/pyhpke/pull/153>`__
+
 Version 0.5.2
 -------------
 
