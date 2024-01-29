@@ -11,7 +11,6 @@ from ..utils import base64url_decode
 
 
 class X25519Key(KEMKeyInterface):
-
     """
     The X25519 key for KEM.
     """
