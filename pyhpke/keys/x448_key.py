@@ -8,7 +8,6 @@ from ..utils import base64url_decode
 
 
 class X448Key(KEMKeyInterface):
-
     """
     The X448 key for KEM.
     """

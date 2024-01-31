@@ -13,7 +13,6 @@ from ..utils import base64url_decode
 
 
 class ECKey(KEMKeyInterface):
-
     """
     The EC key for KEM.
     """
