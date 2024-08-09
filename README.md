@@ -3,7 +3,7 @@
 [![PyPI version](https://badge.fury.io/py/pyhpke.svg)](https://badge.fury.io/py/pyhpke)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyhpke)
 [![Documentation Status](https://readthedocs.org/projects/pyhpke/badge/?version=latest)](https://pyhpke.readthedocs.io/en/latest/?badge=latest)
-![Github CI](https://github.com/dajiaji/pyhpke/actions/workflows/python-package.yml/badge.svg)
+![Github CI](https://github.com/dajiaji/pyhpke/actions/workflows/ci.yml/badge.svg)
 [![codecov](https://codecov.io/gh/dajiaji/pyhpke/branch/main/graph/badge.svg?token=QN8GXEYEP3)](https://codecov.io/gh/dajiaji/pyhpke)
 
 
