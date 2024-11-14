@@ -42,3 +42,6 @@ pytest = ">=7.4.2"
 pytest-cov = ">=4.1.0"
 tox = ">=4.11.3"
 pre-commit = ">=3.4.0"
+
+[tool.poetry.group.dev.dependencies]
+sphinx-rtd-theme = "^3.0.2"
