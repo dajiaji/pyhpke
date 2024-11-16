@@ -4,25 +4,48 @@ Changes
 Unreleased
 ----------
 
+Version 0.6.0
+-------------
+
+Released 2024-11-16
+
+- Add Support for Python 3.13. `#228 <https://github.com/dajiaji/pyhpke/pull/228>`__
+- Drop Support for Python 3.8. `#227 <https://github.com/dajiaji/pyhpke/pull/227>`__
+- Fix link on README. `#206 <https://github.com/dajiaji/pyhpke/pull/206>`__
+- Rename CI/CD files. `#204 <https://github.com/dajiaji/pyhpke/pull/204>`__
+- Fix error on populating codecov token. `#202 <https://github.com/dajiaji/pyhpke/pull/202>`__
+- Update dependencies.
+    - Bump cryptography to 43.0.3. `#221 <https://github.com/dajiaji/pyhpke/pull/221>`__
+- Update dev dependencies.
+    - Bump sphinx-rtd-theme to 3.0.2. `#226 <https://github.com/dajiaji/pyhpke/pull/226>`__
+    - Bump mirrors-mypy to 1.13.0. `#224 <https://github.com/dajiaji/pyhpke/pull/224>`__
+    - Bump blacken-docs to 1.19.1. `#224 <https://github.com/dajiaji/pyhpke/pull/224>`__
+    - Bump tox to 4.23.2. `#223 <https://github.com/dajiaji/pyhpke/pull/223>`__
+    - Bump black to 24.10.0. `#217 <https://github.com/dajiaji/pyhpke/pull/217>`__
+    - Bump pre-commit-hooks to 5.0.0. `#217 <https://github.com/dajiaji/pyhpke/pull/217>`__
+    - Bump pytest to 8.3.3. `#211 <https://github.com/dajiaji/pyhpke/pull/211>`__
+    - Bump black to 24.8.0. `#185 <https://github.com/dajiaji/pyhpke/pull/185>`__
+    - Bump flake8 to 7.1.1. `#185 <https://github.com/dajiaji/pyhpke/pull/185>`__
+
 Version 0.5.4
 -------------
 
 Released 2024-08-03
 
-- Add Python 3.12 to CI. `#166 <https://github.com/dajiaji/pyseto/pull/166>`__
+- Add Python 3.12 to CI. `#166 <https://github.com/dajiaji/pyhpke/pull/166>`__
 - Update dependencies.
     - Bump cryptography to 43.0.0. `#195 <https://github.com/dajiaji/pyhpke/pull/195>`__
 - Update dev dependencies.
-    - Bump codecov/codecov-action to v4. `#199 <https://github.com/dajiaji/pyseto/pull/199>`__
+    - Bump codecov/codecov-action to v4. `#199 <https://github.com/dajiaji/pyhpke/pull/199>`__
     - Bump pytest to 8.3.2. `#198 <https://github.com/dajiaji/pyhpke/pull/198>`__
-    - Bump pre-commit/mirrors-mypy to 1.11.0. `#197 <https://github.com/dajiaji/pyseto/pull/197>`__
-    - Bump tox to 4.16.0. `#194 <https://github.com/dajiaji/pyseto/pull/194>`__
-    - Bump sphinx-autodoc-typehints to 2.0.1. `#186 <https://github.com/dajiaji/pyseto/pull/186>`__
-    - Bump pre-commit/black to 24.4.2. `#185 <https://github.com/dajiaji/pyseto/pull/185>`__
-    - Bump blacken-docs to 1.18.0. `#185 <https://github.com/dajiaji/pyseto/pull/185>`__
-    - Bump pre-commit/flake8 to 7.1.0. `#185 <https://github.com/dajiaji/pyseto/pull/185>`__
-    - Bump pre-commit/pre-commit-hooks to 4.6.0. `#185 <https://github.com/dajiaji/pyseto/pull/185>`__
-    - Bump pytest-cov to 5.0.0. `#184 <https://github.com/dajiaji/pyseto/pull/184>`__
+    - Bump pre-commit/mirrors-mypy to 1.11.0. `#197 <https://github.com/dajiaji/pyhpke/pull/197>`__
+    - Bump tox to 4.16.0. `#194 <https://github.com/dajiaji/pyhpke/pull/194>`__
+    - Bump sphinx-autodoc-typehints to 2.0.1. `#186 <https://github.com/dajiaji/pyhpke/pull/186>`__
+    - Bump pre-commit/black to 24.4.2. `#185 <https://github.com/dajiaji/pyhpke/pull/185>`__
+    - Bump blacken-docs to 1.18.0. `#185 <https://github.com/dajiaji/pyhpke/pull/185>`__
+    - Bump pre-commit/flake8 to 7.1.0. `#185 <https://github.com/dajiaji/pyhpke/pull/185>`__
+    - Bump pre-commit/pre-commit-hooks to 4.6.0. `#185 <https://github.com/dajiaji/pyhpke/pull/185>`__
+    - Bump pytest-cov to 5.0.0. `#184 <https://github.com/dajiaji/pyhpke/pull/184>`__
 
 Version 0.5.3
 -------------
