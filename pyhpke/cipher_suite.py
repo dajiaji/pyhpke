@@ -28,7 +28,7 @@ class CipherSuite(object):
         return
 
     @classmethod
-    def new(cls, kem_id: KEMId, kdf_id: KDFId, aead_id: AEADId):
+    def new(cls, kem_id: KEMId, kdf_id: KDFId, aead_id: AEADId) -> "CipherSuite":
         """
         Constructor of HPKE cipher suite.
 
