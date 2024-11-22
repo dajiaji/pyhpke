@@ -4,6 +4,14 @@ Changes
 Unreleased
 ----------
 
+Version 0.6.1
+-------------
+
+Released 2024-11-23
+
+- Fix docstring of CipherSuite.new. `#232 <https://github.com/dajiaji/pyhpke/pull/232>`__
+- Define return value for CipherSuite.new. `#231 <https://github.com/dajiaji/pyhpke/pull/231>`__
+
 Version 0.6.0
 -------------
 
