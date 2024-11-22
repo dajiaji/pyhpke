@@ -37,7 +37,7 @@ class CipherSuite(object):
             kdf_id (KDFId): A KDF (Key Derivation Function) identifier.
             aead_id (AEADId): An AEAD (Authenticated Encryption with Additional Data) identifier.
         Returns:
-            bytes: A CipherSuite object.
+            CipherSuite: A CipherSuite object.
         """
         suite_id = b"HPKE" + struct.pack(">HHH", kem_id.value, kdf_id.value, aead_id.value)
         kem = KEM(kem_id)
