@@ -7,6 +7,22 @@ Unreleased
 Version 0.6.1
 -------------
 
+Released 2025-02-26
+
+- Update dependencies.
+    - Update cryptography bound. `#241 <https://github.com/dajiaji/pyhpke/pull/241>`__
+- Update dev dependencies.
+    - Bump flake8 to 7.1.2. `#240 <https://github.com/dajiaji/pyhpke/pull/240>`__
+    - Bump black to 25.1.0. `#239 <https://github.com/dajiaji/pyhpke/pull/239>`__
+    - Bump isort to 6.0.0. `#239 <https://github.com/dajiaji/pyhpke/pull/239>`__
+    - Bump mirrors-mypy to 1.15.0. `#239 <https://github.com/dajiaji/pyhpke/pull/239>`__
+    - Bump tox to 4.24.1. `#238 <https://github.com/dajiaji/pyhpke/pull/238>`__
+    - Bump pre-commit to 4.1.0. `#237 <https://github.com/dajiaji/pyhpke/pull/237>`__
+    - Bump pytest to 8.3.4. `#234 <https://github.com/dajiaji/pyhpke/pull/234>`__
+
+Version 0.6.1
+-------------
+
 Released 2024-11-23
 
 - Fix docstring of CipherSuite.new. `#232 <https://github.com/dajiaji/pyhpke/pull/232>`__
