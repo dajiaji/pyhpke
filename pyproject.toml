@@ -26,22 +26,20 @@ exclude = [
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
 cryptography = ">=42.0.1,<45"
-Sphinx = {version = ">=7.1,<8", optional = true, extras = ["docs"]}
-sphinx-autodoc-typehints = {version = ">=1.25.2", optional = true, extras = ["docs"]}
-sphinx-rtd-theme = {version = ">=1.2.1", optional = true, extras = ["docs"]}
 
-[tool.poetry.extras]
-docs = [
-  "Sphinx",
-  "sphinx-rtd-theme",
-  "sphinx-autodoc-typehints",
-]
-
-[tool.poetry.dev-dependencies]
-pytest = ">=7.4.2"
-pytest-cov = ">=4.1.0"
-tox = ">=4.11.3"
-pre-commit = ">=3.4.0"
+[tool.poetry.group.dev]
+optional = true
 
 [tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+pytest-cov = "^6.0.0"
+tox = "^4.24.2"
+pre-commit = "^4.1.0"
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+sphinx = ">=7.1,<8.0.0"
 sphinx-rtd-theme = "^3.0.2"
+sphinx-autodoc-typehints = ">=2.3.0,<3.0.0"
