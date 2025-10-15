@@ -25,7 +25,7 @@ exclude = [
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
-cryptography = ">=42.0.1,<45"
+cryptography = ">=42.0.1,<47"
 
 [tool.poetry.group.dev]
 optional = true
