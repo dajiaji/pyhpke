@@ -4,7 +4,29 @@ Changes
 Unreleased
 ----------
 
-Version 0.6.1
+Version 0.6.3
+-------------
+
+Released 2025-02-26
+
+- Add Support for Python 3.14. `#281 <https://github.com/dajiaji/pyhpke/pull/281>`__
+- Fix readthedocs settings. `#280 <https://github.com/dajiaji/pyhpke/pull/280>`__
+- Refine pyproject.toml to use poetry group. `#246 <https://github.com/dajiaji/pyhpke/pull/246>`__
+- Update dependencies.
+    - Allow cryptography 45 and 46. `#278 <https://github.com/dajiaji/pyhpke/pull/278>`__
+- Update dev dependencies.
+    - Bump isort to 7.0.0. `#277 <https://github.com/dajiaji/pyhpke/pull/277>`__
+    - Bump tox to 4.30.3. `#276 <https://github.com/dajiaji/pyhpke/pull/276>`__
+    - Bump black to 25.9.0. `#275 <https://github.com/dajiaji/pyhpke/pull/275>`__
+    - Bump mirrors-mypy to 1.18.2. `#275 <https://github.com/dajiaji/pyhpke/pull/275>`__
+    - Bump pytest-cov to 7.0.0. `#273 <https://github.com/dajiaji/pyhpke/pull/273>`__
+    - Bump blacken-docs to 1.20.0. `#272 <https://github.com/dajiaji/pyhpke/pull/272>`__
+    - Bump pytest to 8.4.2. `#269 <https://github.com/dajiaji/pyhpke/pull/269>`__
+    - Bump pre-commit to 4.3.0. `#266 <https://github.com/dajiaji/pyhpke/pull/266>`__
+    - Bump pre-commit-hooks to 6.0.0. `#265 <https://github.com/dajiaji/pyhpke/pull/265>`__
+    - Bump flake8 to 7.3.0. `#258 <https://github.com/dajiaji/pyhpke/pull/258>`__
+
+Version 0.6.2
 -------------
 
 Released 2025-02-26
