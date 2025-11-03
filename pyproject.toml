@@ -1,45 +1,46 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.9.6,<1"]
+build-backend = "uv_build"
 
-[tool.poetry]
+[project]
 name = "pyhpke"
 version = "0.6.3"
 description = "A Python implementation of HPKE."
-authors = ["Ajitomi Daisuke <dajiaji@gmail.com>"]
-license = "MIT"
 readme = "README.md"
-repository = "https://github.com/dajiaji/pyhpke"
+requires-python = ">=3.9,<4.0"
+dependencies = ["cryptography>=42.0.1,<47"]
+authors = [{ name = "Ajitomi Daisuke", email = "dajiaji@gmail.com" }]
+license = "MIT"
 
+[project.urls]
+Repository = "https://github.com/dajiaji/pyhpke"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.3.5,<9",
+    "pytest-cov>=6,<8",
+    "pre-commit>=4.1.0,<5",
+]
+docs = [
+    "sphinx>=7.1,<8.0.0",
+    "sphinx-rtd-theme>=3.0.2,<4",
+    "sphinx-autodoc-typehints>=2.3.0,<3.0.0",
+]
+
+[tool.hatch.build.targets.sdist]
 include = [
-  "CHANGES.rst",
-  "docs",
-  "poetry.lock",
-  "tests",
-  "tox.ini",
+    "CHANGES.rst",
+    "docs",
+    "tests",
+    "tox.ini",
 ]
+exclude = ["docs/_build"]
 
-exclude = [
-  "docs/_build",
+[tool.hatch.build.targets.wheel]
+include = [
+    "CHANGES.rst",
+    "docs",
+    "tests",
+    "tox.ini",
 ]
-
-[tool.poetry.dependencies]
-python = ">=3.9,<4.0"
-cryptography = ">=42.0.1,<47"
-
-[tool.poetry.group.dev]
-optional = true
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.3.5"
-pytest-cov = ">=6,<8"
-tox = "^4.24.2"
-pre-commit = "^4.1.0"
-
-[tool.poetry.group.docs]
-optional = true
-
-[tool.poetry.group.docs.dependencies]
-sphinx = ">=7.1,<8.0.0"
-sphinx-rtd-theme = "^3.0.2"
-sphinx-autodoc-typehints = ">=2.3.0,<3.0.0"
+exclude = ["docs/_build"]
