@@ -40,4 +40,4 @@ class X448(KEMPrimitivesInterface):
         return X448Key(sk.raw.public_key())
 
     def exchange(self, sk: KEMKeyInterface, pk: KEMKeyInterface) -> bytes:
-        return sk.raw.exchange(pk.raw)
+        return sk.raw.exchange(pk.raw)  # type: ignore[no-any-return]

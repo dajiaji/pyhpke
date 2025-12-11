@@ -1,6 +1,5 @@
 import json
 import os
-from typing import Optional
 
 import pytest
 
@@ -14,7 +13,11 @@ class TestWithOfficialTestVectors:
 
     @pytest.mark.parametrize(
         "v",
-        json.load(open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "vectors", "test-vectors.json"))),
+        json.load(
+            open(  # noqa: SIM115
+                os.path.join(os.path.dirname(os.path.realpath(__file__)), "vectors", "test-vectors.json")
+            )
+        ),
     )
     def test_with_official_test_vectors(self, v):
         suite = CipherSuite.new(KEMId(v["kem_id"]), KDFId(v["kdf_id"]), AEADId(v["aead_id"]))
@@ -25,8 +28,8 @@ class TestWithOfficialTestVectors:
         eks = KEMKeyPair(ske, pke)
         pkr = suite.kem.deserialize_public_key(bytes.fromhex(v["pkRm"]))
         skr = suite.kem.deserialize_private_key(bytes.fromhex(v["skRm"]))
-        sks: Optional[KEMKeyInterface] = None
-        pks: Optional[KEMKeyInterface] = None
+        sks: KEMKeyInterface | None = None
+        pks: KEMKeyInterface | None = None
         if "skSm" in v and "pkSm" in v:
             sks = suite.kem.deserialize_private_key(bytes.fromhex(v["skSm"]))
             pks = suite.kem.deserialize_public_key(bytes.fromhex(v["pkSm"]))

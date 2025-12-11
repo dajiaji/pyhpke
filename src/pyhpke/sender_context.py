@@ -9,5 +9,5 @@ class SenderContext(EncryptionContext):
         except Exception as err:
             raise SealError("Failed to seal.") from err
 
-    def open(self, ct: bytes, aad: bytes = b"") -> bytes:
+    def open(self, ct: bytes, aad: bytes = b"") -> bytes:  # noqa: ARG002
         raise NotSupportedError("Not available for sender.")

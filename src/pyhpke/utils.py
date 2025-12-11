@@ -2,7 +2,7 @@ import base64
 
 
 def xor_bytes(b1: bytes, b2: bytes) -> bytes:
-    return bytes([a1 ^ a2 for (a1, a2) in zip(b1, b2)])
+    return bytes([a1 ^ a2 for (a1, a2) in zip(b1, b2, strict=True)])
 
 
 def base64url_decode(v: str) -> bytes:

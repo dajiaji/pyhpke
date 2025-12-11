@@ -9,10 +9,10 @@ class ExporterContext(ContextInterface):
         self._exporter_secret = exporter_secret
         return
 
-    def seal(self, pt: bytes, aad: bytes = b"") -> bytes:
+    def seal(self, pt: bytes, aad: bytes = b"") -> bytes:  # noqa: ARG002
         raise NotSupportedError("Not available on export-only mode.")
 
-    def open(self, ct: bytes, aad: bytes = b"") -> bytes:
+    def open(self, ct: bytes, aad: bytes = b"") -> bytes:  # noqa: ARG002
         raise NotSupportedError("Not available on export-only mode.")
 
     def export(self, exporter_context: bytes, length: int) -> bytes:

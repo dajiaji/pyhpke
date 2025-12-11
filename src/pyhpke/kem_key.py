@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, Union
+from typing import Any
 
 from cryptography.hazmat.primitives.asymmetric.ec import (
     EllipticCurvePrivateKey,
@@ -32,24 +32,20 @@ class KEMKey:
         """
         Creates an HPKE key from `pyca/cryptography` key object.
         """
-        if isinstance(k, EllipticCurvePrivateKey) or isinstance(k, EllipticCurvePublicKey):
+        if isinstance(k, (EllipticCurvePrivateKey, EllipticCurvePublicKey)):
             return ECKey(k)
-        elif isinstance(k, X25519PrivateKey) or isinstance(k, X25519PublicKey):
+        elif isinstance(k, (X25519PrivateKey, X25519PublicKey)):
             return X25519Key(k)
-        elif isinstance(k, X448PrivateKey) or isinstance(k, X448PublicKey):
+        elif isinstance(k, (X448PrivateKey, X448PublicKey)):
             return X448Key(k)
         raise ValueError("Unsupported or unknown key.")
 
     @classmethod
-    def from_jwk(cls, data: Union[bytes, str, Dict[str, Any]]) -> KEMKeyInterface:
+    def from_jwk(cls, data: bytes | str | dict[str, Any]) -> KEMKeyInterface:
         """
         Creates an HPKE key from JWK (JSON Web Key).
         """
-        jwk: Dict[str, Any]
-        if not isinstance(data, dict):
-            jwk = json.loads(data)
-        else:
-            jwk = data
+        jwk: dict[str, Any] = json.loads(data) if not isinstance(data, dict) else data
         if "kty" not in jwk:
             raise ValueError("kty not found.")
 
@@ -68,7 +64,7 @@ class KEMKey:
         raise ValueError("Unsupported or unknown key.")
 
     @classmethod
-    def from_pem(cls, data: Union[bytes, str]) -> KEMKeyInterface:
+    def from_pem(cls, data: bytes | str) -> KEMKeyInterface:
         """
         Creates an HPKE key from PEM-formatted key data.
         """
@@ -79,16 +75,14 @@ class KEMKey:
         k: Any = None
         if "BEGIN PUBLIC" in data_str:
             k = load_pem_public_key(data)
-        elif "BEGIN PRIVATE" in data_str:
-            k = load_pem_private_key(data, password=None)
-        elif "BEGIN EC PRIVATE" in data_str:
+        elif "BEGIN PRIVATE" in data_str or "BEGIN EC PRIVATE" in data_str:
             k = load_pem_private_key(data, password=None)
         else:
             raise ValueError("Failed to decode PEM.")
         return cls.from_pyca_cryptography_key(k)
 
 
-class KEMKeyPair(object):
+class KEMKeyPair:
     def __init__(self, sk: KEMKeyInterface, pk: KEMKeyInterface):
         self._sk = sk
         self._pk = pk

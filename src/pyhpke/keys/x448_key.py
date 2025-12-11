@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any
 
 from cryptography.hazmat.primitives.asymmetric.x448 import X448PrivateKey, X448PublicKey
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
@@ -30,7 +30,7 @@ class X448Key(KEMKeyInterface):
         return cls(X448PublicKey.from_public_bytes(key))
 
     @classmethod
-    def from_jwk(cls, jwk: Dict[str, Any]) -> KEMKeyInterface:
+    def from_jwk(cls, jwk: dict[str, Any]) -> KEMKeyInterface:
         """
         Creates an EC key from JWK (JSON Web Key).
         """
@@ -57,7 +57,7 @@ class X448Key(KEMKeyInterface):
     def to_private_bytes(self) -> bytes:
         if self._is_public:
             raise ValueError("The key is public")
-        return self._key.private_bytes_raw()
+        return self._key.private_bytes_raw()  # type: ignore[no-any-return]
 
     def to_public_bytes(self) -> bytes:
         """
@@ -65,4 +65,4 @@ class X448Key(KEMKeyInterface):
         """
         if not self._is_public:
             raise ValueError("The key is private.")
-        return self._key.public_bytes(Encoding.Raw, PublicFormat.Raw)
+        return self._key.public_bytes(Encoding.Raw, PublicFormat.Raw)  # type: ignore[no-any-return]

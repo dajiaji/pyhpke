@@ -1,4 +1,4 @@
-class ContextInterface(object):
+class ContextInterface:
     def seal(self, pt: bytes, aad: bytes = b"") -> bytes:
         raise NotImplementedError()
 

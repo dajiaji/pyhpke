@@ -1,5 +1,5 @@
 import struct
-from typing import Any
+from typing import cast
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, hmac
@@ -14,7 +14,7 @@ class KDF(KDFInterface):
     """
 
     def __init__(self, kdf_id: KDFId, suite_id: bytes):
-        h: Any = None
+        h: hashes.HashAlgorithm
 
         if kdf_id == KDFId.HKDF_SHA256:
             h = hashes.SHA256()
@@ -39,12 +39,12 @@ class KDF(KDFInterface):
 
     @property
     def digest_size(self) -> int:
-        return self._hash.digest_size
+        return cast(int, self._hash.digest_size)
 
     def extract(self, salt: bytes, ikm: bytes) -> bytes:
         ctx = hmac.HMAC(salt, self._hash, backend=default_backend())
         ctx.update(ikm)
-        return ctx.finalize()
+        return cast(bytes, ctx.finalize())
 
     def expand(self, prk: bytes, info: bytes, length: int) -> bytes:
         assert length <= 255 * self._hash.digest_size
