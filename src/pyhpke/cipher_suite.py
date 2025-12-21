@@ -1,5 +1,4 @@
 import struct
-from typing import Optional, Tuple
 
 from .aead import AEAD, AEADParams
 from .aead_interface import AEADInterface
@@ -16,7 +15,7 @@ from .recipient_context import RecipientContext
 from .sender_context import SenderContext
 
 
-class CipherSuite(object):
+class CipherSuite:
     """
     An HPKE cipher suite which consists of KEM, KDF and AEAD.
     """
@@ -70,19 +69,15 @@ class CipherSuite(object):
         self,
         pkr: KEMKeyInterface,
         info: bytes = b"",
-        sks: Optional[KEMKeyInterface] = None,
+        sks: KEMKeyInterface | None = None,
         psk: bytes = b"",
         psk_id: bytes = b"",
-        eks: Optional[KEMKeyPair] = None,
-    ) -> Tuple[bytes, ContextInterface]:
+        eks: KEMKeyPair | None = None,
+    ) -> tuple[bytes, ContextInterface]:
         """
         Creates a sender context.
         """
-        mode: Mode = Mode.BASE
-        if psk == b"":
-            mode = Mode.BASE if sks is None else Mode.AUTH
-        else:
-            mode = Mode.PSK if sks is None else Mode.AUTH_PSK
+        mode: Mode = (Mode.BASE if sks is None else Mode.AUTH) if psk == b"" else (Mode.PSK if sks is None else Mode.AUTH_PSK)
 
         shared_secret, enc = self._kem.encap(pkr, sks, eks)
         return enc, self._key_schedule_s(mode, shared_secret, info, psk, psk_id)
@@ -92,18 +87,14 @@ class CipherSuite(object):
         enc: bytes,
         skr: KEMKeyInterface,
         info: bytes = b"",
-        pks: Optional[KEMKeyInterface] = None,
+        pks: KEMKeyInterface | None = None,
         psk: bytes = b"",
         psk_id: bytes = b"",
     ) -> ContextInterface:
         """
         Creates a recipient context.
         """
-        mode: Mode = Mode.BASE
-        if psk == b"":
-            mode = Mode.BASE if pks is None else Mode.AUTH
-        else:
-            mode = Mode.PSK if pks is None else Mode.AUTH_PSK
+        mode: Mode = (Mode.BASE if pks is None else Mode.AUTH) if psk == b"" else (Mode.PSK if pks is None else Mode.AUTH_PSK)
 
         shared_secret = self._kem.decap(enc, skr, pks)
         return self._key_schedule_r(mode, shared_secret, info, psk, psk_id)
@@ -116,8 +107,8 @@ class CipherSuite(object):
         aad: bytes = b"",
         psk: bytes = b"",
         psk_id: bytes = b"",
-        sks: Optional[KEMKeyInterface] = None,
-    ) -> Tuple[bytes, bytes]:
+        sks: KEMKeyInterface | None = None,
+    ) -> tuple[bytes, bytes]:
         """
         Does a single-shot encryption.
         """
@@ -132,7 +123,7 @@ class CipherSuite(object):
         aad: bytes = b"",
         psk: bytes = b"",
         psk_id: bytes = b"",
-        pks: Optional[KEMKeyInterface] = None,
+        pks: KEMKeyInterface | None = None,
     ) -> bytes:
         """
         Does a single-shot decryption.
@@ -146,7 +137,7 @@ class CipherSuite(object):
         info: bytes,
         psk: bytes,
         psk_id: bytes,
-    ) -> Tuple[KDF, AEADParams]:
+    ) -> tuple[KDF, AEADParams]:
         suite_id = b"HPKE" + struct.pack(">HHH", self._kem.id.value, self._kdf.id.value, self._aead.id.value)
         kdf = KDF(self._kdf.id, suite_id)
 

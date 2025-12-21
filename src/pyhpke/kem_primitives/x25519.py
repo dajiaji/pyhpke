@@ -42,4 +42,4 @@ class X25519(KEMPrimitivesInterface):
         return X25519Key(sk.raw.public_key())
 
     def exchange(self, sk: KEMKeyInterface, pk: KEMKeyInterface) -> bytes:
-        return sk.raw.exchange(pk.raw)
+        return sk.raw.exchange(pk.raw)  # type: ignore[no-any-return]

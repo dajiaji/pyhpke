@@ -2,7 +2,7 @@ from .kdf import KDF
 from .kem_key import KEMKeyInterface, KEMKeyPair
 
 
-class KEMPrimitivesInterface(object):
+class KEMPrimitivesInterface:
     """
     The KEM (Key Encapsulation Mechanism) interface.
     """

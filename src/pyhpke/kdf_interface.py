@@ -1,7 +1,7 @@
 from .consts import KDFId
 
 
-class KDFInterface(object):
+class KDFInterface:
     """
     The KDF (Key Derivation Function) interface.
     """

@@ -3,7 +3,7 @@ from .exceptions import NotSupportedError, OpenError
 
 
 class RecipientContext(EncryptionContext):
-    def seal(self, pt: bytes, aad: bytes = b"") -> bytes:
+    def seal(self, pt: bytes, aad: bytes = b"") -> bytes:  # noqa: ARG002
         raise NotSupportedError("Not available for recipient.")
 
     def open(self, ct: bytes, aad: bytes = b"") -> bytes:

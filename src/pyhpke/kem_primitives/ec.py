@@ -1,3 +1,5 @@
+from typing import cast
+
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import ec
 
@@ -17,6 +19,7 @@ class EC(KEMPrimitivesInterface):
     """
 
     def __init__(self, kem_id: KEMId):
+        self._crv: ec.EllipticCurve
         if kem_id == KEMId.DHKEM_P256_HKDF_SHA256:
             self._crv = ec.SECP256R1()
             self._nsecret = 32
@@ -76,4 +79,4 @@ class EC(KEMPrimitivesInterface):
         return ECKey(sk.raw.public_key())
 
     def exchange(self, sk: KEMKeyInterface, pk: KEMKeyInterface) -> bytes:
-        return sk.raw.exchange(ec.ECDH(), pk.raw)
+        return cast(bytes, sk.raw.exchange(ec.ECDH(), pk.raw))

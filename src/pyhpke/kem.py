@@ -1,5 +1,5 @@
 import struct
-from typing import Any, Optional, Tuple
+from typing import Any
 
 from .consts import KDFId, KEMId
 from .kdf import KDF
@@ -53,7 +53,7 @@ class KEM(KEMInterface):
         return self._id
 
     def derive_key_pair(self, ikm: bytes) -> KEMKeyPair:
-        return self._prim.derive_key_pair(ikm, self._kdf)
+        return self._prim.derive_key_pair(ikm, self._kdf)  # type: ignore[no-any-return]
 
     def extract_and_expand(self, dh: bytes, kem_context: bytes, length: int) -> bytes:
         eae_prk = self._kdf.labeled_extract(b"", b"eae_prk", dh)
@@ -61,23 +61,19 @@ class KEM(KEMInterface):
         return shared_secret
 
     def deserialize_private_key(self, key: bytes) -> KEMKeyInterface:
-        return self._prim.deserialize_private_key(key)
+        return self._prim.deserialize_private_key(key)  # type: ignore[no-any-return]
 
     def deserialize_public_key(self, key: bytes) -> KEMKeyInterface:
-        return self._prim.deserialize_public_key(key)
+        return self._prim.deserialize_public_key(key)  # type: ignore[no-any-return]
 
     def encap(
         self,
         pkr: KEMKeyInterface,
-        sks: Optional[KEMKeyInterface] = None,
-        eks: Optional[KEMKeyPair] = None,
-    ) -> Tuple[bytes, bytes]:
+        sks: KEMKeyInterface | None = None,
+        eks: KEMKeyPair | None = None,
+    ) -> tuple[bytes, bytes]:
         """ """
-        if eks is None:
-            ek = self._prim.generate_key_pair()
-        else:
-            # For testing purpose only
-            ek = eks
+        ek = self._prim.generate_key_pair() if eks is None else eks
         enc = self._prim.serialize_public_key(ek.public_key)
 
         if sks is None:
@@ -93,7 +89,7 @@ class KEM(KEMInterface):
         shared_secret = self.extract_and_expand(dh, kem_context, self._nsecret)
         return shared_secret, enc
 
-    def decap(self, enc: bytes, skr: KEMKeyInterface, pks: Optional[KEMKeyInterface] = None) -> bytes:
+    def decap(self, enc: bytes, skr: KEMKeyInterface, pks: KEMKeyInterface | None = None) -> bytes:
         """ """
         pke = self._prim.deserialize_public_key(enc)
         pkr = self._prim.derive_public_key(skr)

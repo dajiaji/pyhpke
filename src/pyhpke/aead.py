@@ -22,11 +22,7 @@ class AEAD(AEADInterface):
             self._nk = 16
             self._nn = 12
             self._nt = 16
-        elif aead_id == AEADId.AES256_GCM:
-            self._nk = 32
-            self._nn = 12
-            self._nt = 16
-        elif aead_id == AEADId.CHACHA20_POLY1305:
+        elif aead_id == AEADId.AES256_GCM or aead_id == AEADId.CHACHA20_POLY1305:
             self._nk = 32
             self._nn = 12
             self._nt = 16
@@ -74,7 +70,7 @@ class AEAD(AEADInterface):
         return AEADKey.from_bytes(self._id, key)
 
 
-class AEADParams(object):
+class AEADParams:
     def __init__(self, ctx: AEADInterface, key: bytes, base_nonce: bytes, seq: int, exporter_secret: bytes):
         self._ctx = ctx
         self._key = key

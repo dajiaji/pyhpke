@@ -1,5 +1,5 @@
 [build-system]
-requires = ["uv_build>=0.9.6,<1"]
+requires = ["uv_build>=0.9.7,<1"]
 build-backend = "uv_build"
 
 [project]
@@ -7,40 +7,98 @@ name = "pyhpke"
 version = "0.6.3"
 description = "A Python implementation of HPKE."
 readme = "README.md"
-requires-python = ">=3.9,<4.0"
-dependencies = ["cryptography>=42.0.1,<47"]
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "cryptography>=42.0.1,<47",
+]
 authors = [{ name = "Ajitomi Daisuke", email = "dajiaji@gmail.com" }]
 license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Typing :: Typed",
+]
 
 [project.urls]
 Repository = "https://github.com/dajiaji/pyhpke"
 
-[project.optional-dependencies]
-test = [
-    "pytest>=8.3.5,<9",
-    "pytest-cov>=6,<8",
-    "pre-commit>=4.1.0,<5",
+[dependency-groups]
+dev = [
+    "mypy>=1.19.1",
+    "pre-commit>=4.3.0",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.14.10",
 ]
 docs = [
-    "sphinx>=7.1,<8.0.0",
-    "sphinx-rtd-theme>=3.0.2,<4",
-    "sphinx-autodoc-typehints>=2.3.0,<3.0.0",
+    "docutils>=0.21.2",
+    "sphinx>=7.4.7,<9.0.0",
+    "sphinx-autodoc-typehints>=2.3.0",
+    "sphinx-rtd-theme>=3.0.2",
 ]
 
-[tool.hatch.build.targets.sdist]
-include = [
-    "CHANGES.rst",
-    "docs",
-    "tests",
-    "tox.ini",
+[tool.uv.build-backend]
+source-include = [
+    "tests/**",
+    "docs/**",
 ]
-exclude = ["docs/_build"]
+source-exclude = [
+    "docs/_build/**",
+]
 
-[tool.hatch.build.targets.wheel]
-include = [
-    "CHANGES.rst",
-    "docs",
-    "tests",
-    "tox.ini",
+[tool.mypy]
+ignore_missing_imports = true
+pretty = true
+warn_unused_ignores = true
+check_untyped_defs = true
+warn_return_any = true
+no_implicit_optional = true
+strict_equality = true
+python_version = "3.10"
+exclude = "^(tests|examples|dist)/"
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+ignore_errors = true
+
+[tool.ruff]
+target-version = "py310"
+line-length = 128  # Match black configuration used by pre-commit hooks.
+
+[tool.ruff.format]
+line-ending = "auto"
+indent-style = "space"
+quote-style = "double"
+skip-magic-trailing-comma = false
+docstring-code-format = true  # Mirrors blacken-docs formatting of fenced blocks.
+docstring-code-line-length = 128
+
+[tool.ruff.lint]
+# Match the flake8 + flake8-bugbear setup from .pre-commit-config.yaml by enabling
+# E/F/W plus B codes, and extend with Ruff's built-in equivalents for the
+# plugins we already run (flake8-comprehensions, pyupgrade, flake8-unused-arguments,
+# flake8-simplify, isort, debug-statements) per docs.astral.sh/ruff/rules/.
+select = [
+    "B",
+    "E",
+    "F",
+    "W",
+    "I",
+    "T10",
+    "C4",
+    "UP",
+    "ARG",
+    "SIM",
 ]
-exclude = ["docs/_build"]
+ignore = ["E203", "E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pyhpke", "tests"]

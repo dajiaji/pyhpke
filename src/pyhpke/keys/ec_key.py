@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, cast
 
 from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives.asymmetric.ec import (
@@ -35,7 +35,7 @@ class ECKey(KEMKeyInterface):
         return cls(ec.EllipticCurvePublicKey.from_encoded_point(crv, key))
 
     @classmethod
-    def from_jwk(cls, jwk: Dict[str, Any]) -> KEMKeyInterface:
+    def from_jwk(cls, jwk: dict[str, Any]) -> KEMKeyInterface:
         """
         Creates an EC key from JWK (JSON Web Key).
         """
@@ -51,6 +51,7 @@ class ECKey(KEMKeyInterface):
 
         if "crv" not in jwk or jwk["crv"] not in HPKE_SUPPORTED_JWK_EC_CRVS:
             raise ValueError(f"Unknown crv: {jwk['crv']}.")
+        crv: ec.EllipticCurve
         if jwk["crv"] == "P-256":
             if len(x) == len(y) == 32:
                 crv = ec.SECP256R1()
@@ -96,4 +97,4 @@ class ECKey(KEMKeyInterface):
         """
         if not self._is_public:
             raise ValueError("The key is private.")
-        return self._key.public_bytes(encoding=Encoding.X962, format=PublicFormat.UncompressedPoint)
+        return cast(bytes, self._key.public_bytes(encoding=Encoding.X962, format=PublicFormat.UncompressedPoint))
