@@ -4,6 +4,19 @@ Changes
 Unreleased
 ----------
 
+Version 0.6.4
+-------------
+
+Released 2025-12-21
+
+- Introduce gh-action-pypi-publish. `#290 <https://github.com/dajiaji/pyhpke/pull/290>`__
+- Introduce workflow security. `#289 <https://github.com/dajiaji/pyhpke/pull/289>`__
+- Introduce uv and ruff. `#288 <https://github.com/dajiaji/pyhpke/pull/288>`__
+- Migrate from poetry to uv. `#283 <https://github.com/dajiaji/pyhpke/pull/283>`__
+- Update dev dependencies.
+    - Bump mirrors-mypy to 1.19.1. `#287 <https://github.com/dajiaji/pyhpke/pull/287>`__
+    - Bump black to 25.12.0. `#286 <https://github.com/dajiaji/pyhpke/pull/286>`__
+
 Version 0.6.3
 -------------
 
