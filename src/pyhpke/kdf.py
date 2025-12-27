@@ -47,7 +47,9 @@ class KDF(KDFInterface):
         return cast(bytes, ctx.finalize())
 
     def expand(self, prk: bytes, info: bytes, length: int) -> bytes:
-        assert length <= 255 * self._hash.digest_size
+        max_length = 255 * self._hash.digest_size
+        if length > max_length:
+            raise ValueError(f"length ({length}) must be <= {max_length}")
 
         t_n_minus_1 = b""
         n = 1
