@@ -4,28 +4,28 @@ version: '3'
 vars:
   # 2-day delay (security verification window)
   EXCLUDE_NEWER_DAYS: 2
-  EXCLUDE_NEWER_DATE:
-    sh: date -u -d '{{.EXCLUDE_NEWER_DAYS}} days ago' '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || date -u -v-{{.EXCLUDE_NEWER_DAYS}}d '+%Y-%m-%dT%H:%M:%SZ'
+  EXCLUDE_NEWER: "{{.EXCLUDE_NEWER_DAYS}} days"
 
 tasks:
   uv:add:
     desc: "Add package (with {{.EXCLUDE_NEWER_DAYS}}-day delay)"
     cmds:
-      - echo "Excluding packages newer than {{.EXCLUDE_NEWER_DATE}}"
-      - uv add --exclude-newer {{.EXCLUDE_NEWER_DATE}} {{.CLI_ARGS}}
+      - echo "Excluding packages newer than {{.EXCLUDE_NEWER}}"
+      - uv add --exclude-newer "{{.EXCLUDE_NEWER}}" --no-build --no-install-project {{.CLI_ARGS}}
       - task: uv:export-requirements
 
   uv:lock:
     desc: "Lock dependencies (with {{.EXCLUDE_NEWER_DAYS}}-day delay)"
     cmds:
-      - echo "Excluding packages newer than {{.EXCLUDE_NEWER_DATE}}"
-      - uv lock --exclude-newer {{.EXCLUDE_NEWER_DATE}}
+      - echo "Excluding packages newer than {{.EXCLUDE_NEWER}}"
+      - uv lock --exclude-newer "{{.EXCLUDE_NEWER}}" --no-build
       - task: uv:export-requirements
 
   uv:lock:upgrade:
     desc: "Upgrade all dependencies (with {{.EXCLUDE_NEWER_DAYS}}-day delay)"
     cmds:
-      - uv lock --upgrade --exclude-newer {{.EXCLUDE_NEWER_DATE}}
+      - echo "Excluding packages newer than {{.EXCLUDE_NEWER}}"
+      - uv lock --upgrade --exclude-newer "{{.EXCLUDE_NEWER}}" --no-build
       - task: uv:export-requirements
 
   uv:export-requirements:
@@ -39,16 +39,21 @@ tasks:
     cmds:
       - uv sync --frozen --all-groups
 
+  uv:run:
+    desc: "Run command via uv with locked, time-delayed dependencies (e.g., task uv:run -- python app.py)"
+    cmds:
+      - uv run --no-sync {{.CLI_ARGS}}
+
+  uv:tool:install:
+    desc: "Install a uv tool without building sdists (e.g., task uv:tool:install -- ruff)"
+    cmds:
+      - uv tool install --no-build {{.CLI_ARGS}}
+
   uv:dev:
     desc: "Set up development environment"
     cmds:
       - task: uv:sync
       - uv run pre-commit install
-
-  uv:run:
-    desc: "Run command via uv with locked, time-delayed dependencies (e.g., task uv:run -- python app.py)"
-    cmds:
-      - uv run --no-sync {{.CLI_ARGS}}
 
   uv:security:
     desc: "Run security scan"
