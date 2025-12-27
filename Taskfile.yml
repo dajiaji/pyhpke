@@ -31,13 +31,13 @@ tasks:
   uv:export-requirements:
     desc: "Export uv.lock to requirements.txt for scanners"
     cmds:
-      - echo "Excluding packages newer than {{.EXCLUDE_NEWER_DATE}}"
-      - uv export --format requirements.txt --all-groups --locked --exclude-newer {{.EXCLUDE_NEWER_DATE}} -o requirements.txt
+      - echo "Excluding packages newer than {{.EXCLUDE_NEWER}}"
+      - uv export --format requirements-txt --all-groups --locked --exclude-newer "{{.EXCLUDE_NEWER}}" -o requirements.txt
 
   uv:sync:
-    desc: "Sync environment"
+    desc: "Sync environment without building sdists"
     cmds:
-      - uv sync --frozen --all-groups
+      - uv sync --frozen --all-groups --no-build --no-install-project
 
   uv:run:
     desc: "Run command via uv with locked, time-delayed dependencies (e.g., task uv:run -- python app.py)"
@@ -53,7 +53,14 @@ tasks:
     desc: "Set up development environment"
     cmds:
       - task: uv:sync
+      - uv pip install -e .
       - uv run pre-commit install
+
+  uv:licenses:
+    desc: "Export requirements.txt and run a license check"
+    cmds:
+      - uv export --format requirements-txt --without-hashes --all-groups -o requirements.txt
+      - uv run pip-licenses
 
   uv:security:
     desc: "Run security scan"
