@@ -1,5 +1,6 @@
 from .kdf import KDF
-from .kem_key import KEMKeyInterface, KEMKeyPair
+from .kem_key import KEMKeyPair
+from .kem_key_interface import KEMKeyInterface
 
 
 class KEMPrimitivesInterface:

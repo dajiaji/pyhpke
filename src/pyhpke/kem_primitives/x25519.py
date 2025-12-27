@@ -12,7 +12,7 @@ from ..keys.x25519_key import X25519Key
 class X25519(KEMPrimitivesInterface):
     """ """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._nsecret = 32
         self._nsk = 32
 

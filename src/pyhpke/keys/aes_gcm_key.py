@@ -1,5 +1,3 @@
-from typing import cast
-
 from cryptography.hazmat.primitives.ciphers import aead
 
 from ..aead_key_interface import AEADKeyInterface
@@ -18,7 +16,7 @@ class AESGCMKey(AEADKeyInterface):
         self._ctx = aead.AESGCM(key)
 
     def seal(self, pt: bytes, nonce: bytes, aad: bytes = b"") -> bytes:
-        return cast(bytes, self._ctx.encrypt(nonce, pt, aad))
+        return self._ctx.encrypt(nonce, pt, aad)
 
     def open(self, ct: bytes, nonce: bytes, aad: bytes = b"") -> bytes:
-        return cast(bytes, self._ctx.decrypt(nonce, ct, aad))
+        return self._ctx.decrypt(nonce, ct, aad)

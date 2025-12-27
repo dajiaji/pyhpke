@@ -1,5 +1,6 @@
 import json
 import os
+from typing import Any
 
 import pytest
 
@@ -19,7 +20,7 @@ class TestWithOfficialTestVectors:
             )
         ),
     )
-    def test_with_official_test_vectors(self, v):
+    def test_with_official_test_vectors(self, v: dict[str, Any]) -> None:
         suite = CipherSuite.new(KEMId(v["kem_id"]), KDFId(v["kdf_id"]), AEADId(v["aead_id"]))
 
         # deserialize_{private,public}_key

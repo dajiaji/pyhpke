@@ -10,7 +10,7 @@ from ..keys.x448_key import X448Key
 class X448(KEMPrimitivesInterface):
     """ """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._nsecret = 64
         self._nsk = 56
 

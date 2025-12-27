@@ -54,20 +54,8 @@ source-exclude = [
     "docs/_build/**",
 ]
 
-[tool.mypy]
-ignore_missing_imports = true
-pretty = true
-warn_unused_ignores = true
-check_untyped_defs = true
-warn_return_any = true
-no_implicit_optional = true
-strict_equality = true
-python_version = "3.10"
-exclude = "^(tests|examples|dist)/"
-
-[[tool.mypy.overrides]]
-module = ["tests.*"]
-ignore_errors = true
+[tool.uv]
+cache-dir = ".uv-cache"
 
 [tool.ruff]
 target-version = "py310"
@@ -104,3 +92,22 @@ per-file-ignores = { "tests/**" = ["S101", "S106"] }
 
 [tool.ruff.lint.isort]
 known-first-party = ["pyhpke", "tests"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+# mypy_path = ["typings"]
+# warn_return_any = true
+# no_implicit_optional = true
+# strict_equality = true
+# warn_unused_ignores = true
+# disallow_any_generics = true
+disallow_any_unimported = true
+warn_unreachable = true
+ignore_missing_imports = false
+pretty = true
+
+# Ignore type errors in tests; they are covered by runtime pytest runs instead.
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+ignore_errors = true

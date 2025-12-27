@@ -1,5 +1,4 @@
 import struct
-from typing import cast
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, hmac
@@ -39,12 +38,12 @@ class KDF(KDFInterface):
 
     @property
     def digest_size(self) -> int:
-        return cast(int, self._hash.digest_size)
+        return self._hash.digest_size
 
     def extract(self, salt: bytes, ikm: bytes) -> bytes:
         ctx = hmac.HMAC(salt, self._hash, backend=default_backend())
         ctx.update(ikm)
-        return cast(bytes, ctx.finalize())
+        return ctx.finalize()
 
     def expand(self, prk: bytes, info: bytes, length: int) -> bytes:
         max_length = 255 * self._hash.digest_size
