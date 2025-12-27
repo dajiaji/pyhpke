@@ -13,7 +13,7 @@ class EncryptionContext(ExporterContext):
         super().__init__(kdf, aead_params.exporter_secret)
         return
 
-    def _next_nonce(self):
+    def _next_nonce(self) -> bytes:
         nonce = xor_bytes(self._nonce, self._seq.to_bytes(self._nn, byteorder="big"))
         self._seq += 1
         return nonce
