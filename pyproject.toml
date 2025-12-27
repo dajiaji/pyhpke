@@ -90,8 +90,9 @@ select = [
     "B",
     "E",
     "F",
-    "W",
     "I",
+    "S",
+    "W",
     "T10",
     "C4",
     "UP",
@@ -99,6 +100,7 @@ select = [
     "SIM",
 ]
 ignore = ["E203", "E501"]
+per-file-ignores = { "tests/**" = ["S101", "S106"] }
 
 [tool.ruff.lint.isort]
 known-first-party = ["pyhpke", "tests"]
