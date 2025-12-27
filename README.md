@@ -5,7 +5,7 @@
 [![Documentation Status](https://readthedocs.org/projects/pyhpke/badge/?version=latest)](https://pyhpke.readthedocs.io/en/latest/?badge=latest)
 ![Github CI](https://github.com/dajiaji/pyhpke/actions/workflows/ci.yml/badge.svg)
 [![codecov](https://codecov.io/gh/dajiaji/pyhpke/branch/main/graph/badge.svg?token=QN8GXEYEP3)](https://codecov.io/gh/dajiaji/pyhpke)
-
+[![Known Vulnerabilities](https://snyk.io/test/github/dajiaji/pyhpke/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/dajiaji/pyhpke?targetFile=requirements.txt)
 
 PyHPKE is a [HPKE (Hybrid Public Key Encryption)](https://www.rfc-editor.org/rfc/rfc9180.html) implementation written in Python.
 
@@ -69,6 +69,7 @@ keypair = suite_s.kem.derive_key_pair(b"some_ikm_bytes_used_for_key_derivation")
 - [Usage](#usage)
 - [API Reference](#api-reference)
 - [Test](#test)
+- [Security](#security)
 - [Contributing](#contributing)
 
 ## Installation
@@ -161,6 +162,16 @@ You can run tests from the project root after cloning with:
 ```sh
 $ tox
 ```
+
+## Security
+
+If you discover a security issue, please report it via a GitHub issue and avoid disclosing exploit details publicly until we respond.
+
+This project has not been formally audited; use it according to your risk assessment.
+
+The Snyk badge reports results based on `requirements.txt` exported from `uv.lock` and reflects dependency scanning only.
+
+See [SECURITY.md](SECURITY.md) for our security policy and reporting guidance.
 
 ## Contributing
 
