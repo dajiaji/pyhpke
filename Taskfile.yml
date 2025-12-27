@@ -13,17 +13,26 @@ tasks:
     cmds:
       - echo "Excluding packages newer than {{.EXCLUDE_NEWER_DATE}}"
       - uv add --exclude-newer {{.EXCLUDE_NEWER_DATE}} {{.CLI_ARGS}}
+      - task: uv:export-requirements
 
   uv:lock:
     desc: "Lock dependencies (with {{.EXCLUDE_NEWER_DAYS}}-day delay)"
     cmds:
       - echo "Excluding packages newer than {{.EXCLUDE_NEWER_DATE}}"
       - uv lock --exclude-newer {{.EXCLUDE_NEWER_DATE}}
+      - task: uv:export-requirements
 
   uv:lock:upgrade:
     desc: "Upgrade all dependencies (with {{.EXCLUDE_NEWER_DAYS}}-day delay)"
     cmds:
       - uv lock --upgrade --exclude-newer {{.EXCLUDE_NEWER_DATE}}
+      - task: uv:export-requirements
+
+  uv:export-requirements:
+    desc: "Export uv.lock to requirements.txt for scanners"
+    cmds:
+      - echo "Excluding packages newer than {{.EXCLUDE_NEWER_DATE}}"
+      - uv export --format requirements.txt --all-groups --locked --exclude-newer {{.EXCLUDE_NEWER_DATE}} -o requirements.txt
 
   uv:sync:
     desc: "Sync environment"
