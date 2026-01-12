@@ -723,9 +723,9 @@ sphinx-autodoc-typehints==3.0.1 ; python_full_version < '3.11' \
 sphinx-autodoc-typehints==3.5.2 ; python_full_version >= '3.11' \
     --hash=sha256:0accd043619f53c86705958e323b419e41667917045ac9215d7be1b493648d8c \
     --hash=sha256:5fcd4a3eb7aa89424c1e2e32bedca66edc38367569c9169a80f4b3e934171fdb
-sphinx-rtd-theme==3.0.2 \
-    --hash=sha256:422ccc750c3a3a311de4ae327e82affdaf59eb695ba4936538552f3b00f4ee13 \
-    --hash=sha256:b7457bc25dda723b20b086a670b9953c859eab60a2a03ee8eb2bb23e176e5f85
+sphinx-rtd-theme==3.1.0 \
+    --hash=sha256:1785824ae8e6632060490f67cf3a72d404a85d2d9fc26bce3619944de5682b89 \
+    --hash=sha256:b44276f2c276e909239a4f6c955aa667aaafeb78597923b1c60babc76db78e4c
 sphinxcontrib-applehelp==2.0.0 \
     --hash=sha256:2f29ef331735ce958efa4734873f084941970894c6090408b079c61b2e1c06d1 \
     --hash=sha256:4cd3f0ec4ac5dd9c17ec65e9ab272c9b867ea77425228e68ecf08d6b28ddbdb5
