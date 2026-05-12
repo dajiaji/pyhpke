@@ -895,7 +895,7 @@ urllib3==2.6.3 \
     --hash=sha256:1b62b6884944a57dbe321509ab94fd4d3b307075e0c2eae991ac71ee15ad38ed \
     --hash=sha256:bf272323e553dfb2e87d9bfd225ca7b0f467b919d7bbd355436d3fd37cb0acd4
     # via requests
-virtualenv==21.2.0 \
-    --hash=sha256:1720dc3a62ef5b443092e3f499228599045d7fea4c79199770499df8becf9098 \
-    --hash=sha256:1bd755b504931164a5a496d217c014d098426cddc79363ad66ac78125f9d908f
+virtualenv==21.3.1 \
+    --hash=sha256:c2305bc1fddeec40699b8370d13f8d431b0701f00ce895061ce493aeded4426b \
+    --hash=sha256:d1a71cf58f2f9228fff23a1f6ec15d39785c6b32e03658d104974247145edd35
     # via pre-commit
