@@ -4,6 +4,9 @@ Changes
 Unreleased
 ----------
 
+- Update dependencies.
+    - Allow cryptography 48 and 49.
+
 Version 0.6.4
 -------------
 
