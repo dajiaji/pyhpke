@@ -1123,7 +1123,7 @@ wheels = [
 
 [[package]]
 name = "pyhpke"
-version = "0.6.4"
+version = "0.6.5"
 source = { editable = "." }
 dependencies = [
     { name = "cryptography" },
@@ -1149,7 +1149,7 @@ docs = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "cryptography", specifier = ">=42.0.1,<50" }]
+requires-dist = [{ name = "cryptography", specifier = ">=42.0.1,<52" }]
 
 [package.metadata.requires-dev]
 dev = [
