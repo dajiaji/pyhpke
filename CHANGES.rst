@@ -4,8 +4,29 @@ Changes
 Unreleased
 ----------
 
+Version 0.6.5
+-------------
+
+Released 2026-07-16
+
+- Move dependency workflow from Taskfile to native uv config. `#342 <https://github.com/dajiaji/pyhpke/pull/342>`__
+- Add Security section to README. `#298 <https://github.com/dajiaji/pyhpke/pull/298>`__
+- Refine taskfile.yml. `#297 <https://github.com/dajiaji/pyhpke/pull/297>`__
+- Introduce uv:tool:install. `#296 <https://github.com/dajiaji/pyhpke/pull/296>`__
+- Add requirements.txt for snyk. `#295 <https://github.com/dajiaji/pyhpke/pull/295>`__
+- Apply strict check on mypy. `#294 <https://github.com/dajiaji/pyhpke/pull/294>`__
+- Introduce ruff-format on pre-commit. `#293 <https://github.com/dajiaji/pyhpke/pull/293>`__
+- Activate s-rules on ruff. `#292 <https://github.com/dajiaji/pyhpke/pull/292>`__
 - Update dependencies.
-    - Allow cryptography 48 and 49.
+    - Allow cryptography 50 and 51. `#343 <https://github.com/dajiaji/pyhpke/pull/343>`__
+    - Allow cryptography 48 and 49. `#340 <https://github.com/dajiaji/pyhpke/pull/340>`__
+- Update dev dependencies.
+    - Bump ruff to 0.15.21. `#341 <https://github.com/dajiaji/pyhpke/pull/341>`__
+    - Bump mypy to 2.2.0. `#341 <https://github.com/dajiaji/pyhpke/pull/341>`__
+    - Bump pytest to 9.1.1. `#341 <https://github.com/dajiaji/pyhpke/pull/341>`__
+    - Bump pre-commit to 4.6.0. `#332 <https://github.com/dajiaji/pyhpke/pull/332>`__
+    - Bump pytest-cov to 7.1.0. `#319 <https://github.com/dajiaji/pyhpke/pull/319>`__
+    - Bump sphinx-rtd-theme to 3.1.0. `#310 <https://github.com/dajiaji/pyhpke/pull/310>`__
 
 Version 0.6.4
 -------------
