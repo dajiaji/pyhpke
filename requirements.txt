@@ -457,9 +457,9 @@ filelock==3.32.2 \
     #   cachecontrol
     #   python-discovery
     #   virtualenv
-identify==2.6.19 \
-    --hash=sha256:20e6a87f786f768c092a721ad107fc9df0eb89347be9396cadf3f4abbd1fb78a \
-    --hash=sha256:6be5020c38fcb07da56c53733538a3081ea5aa70d36a156f83044bfbf9173842
+identify==2.6.20 \
+    --hash=sha256:6a16b69b93187244e0548cbfd25b3e4a6f9a7a2ad784625c3bec2b8d27b81aaa \
+    --hash=sha256:ad729860a923858d26917c2f4fb0a1d83d27a75b1e090c06440c573f048f3285
     # via pre-commit
 idna==3.18 \
     --hash=sha256:7f952cbe720b688055e3f87de14f5c3e5fdaa8bc3928985c4077ca689de849a2 \
